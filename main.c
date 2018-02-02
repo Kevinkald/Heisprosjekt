@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 int main(){
-	printf("Hello world\n");
-	printf("...and Jupiter\n");
+	printf("Hello Kevin\n");
+	printf("This is Jan <3\n");
 	if (1>0) {
 		return 1;
 	}
