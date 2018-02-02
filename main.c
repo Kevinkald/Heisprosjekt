@@ -1,11 +1,19 @@
 #include <stdio.h>
 
 int main(){
-	printf("Hello world\n");
-	printf("...and Jupiter\n");
-	if (1>0) {
-		return 1;
+	
+	printf("(Press key to continue: )\n");
+	char c;
+	char k = 'k';
+	c=getchar( );
+	printf("you entered:\n");
+	putchar(c);
+	printf(" \n");
+
+	while(c!=k) {
+		printf("press k to stop!!\n");
+		c=getchar( );
 	}
-	printf("...and Mars\n");
+	printf("Program done, terminating program.\n");
 	return 0;
 }
