@@ -19,5 +19,6 @@ int main(){
 	printf("Pull this program Jan\n");
 	printf(" \n");
 	printf("Program done, terminating program.\n");
+	printf("test\n");
 	return 0;
 }
