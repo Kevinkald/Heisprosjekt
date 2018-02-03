@@ -12,11 +12,12 @@ int main(){
 	while(c!=k) {
 		printf("press k to stop!!\n");
 		c=getchar( );
+	 }
 	printf("Hello Kevin\n");
 	printf("This is Jan <3\n");
-	if (1>0) {
-		return 1;
-	}
+	printf(" \n");
+	printf("Pull this program Jan\n");
+	printf(" \n");
 	printf("Program done, terminating program.\n");
 	return 0;
 }
