@@ -17,6 +17,7 @@ Main Success Scenario:
 12. New cycle starts here.
 
 Extensions:
+
 2a: Elevator is busy
 	1. Elevator finishes current task, can pick up the user if in the same direction.
 	2. Elevator drives to the triggered floor.
@@ -32,5 +33,4 @@ Extensions:
 
 9a: Elevator stops at floors where a trigger for the same direction has appeared.
 
-Extensions: Jump from 2-3a instead of going from 2-3, edit this. 
 wants versions of development process with coments.
