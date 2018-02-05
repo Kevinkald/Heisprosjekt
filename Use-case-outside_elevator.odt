@@ -14,7 +14,8 @@ Main Success Scenario:
 9. Elevator stops.
 10. Elevator opens doors.
 11. Elevator closes doors after 3 seconds.
-12. New cycle starts here.
+|
+12. New cycle.
 
 Extensions:
 
