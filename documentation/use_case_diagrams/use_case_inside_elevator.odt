@@ -21,3 +21,8 @@ Extensions:
 
 2a: In case of queue
 	1. Elevator continues in the set direction as previously. Direction is changed when all floors are visited down/up a direction.
+
+3a: Emergency button pushed
+	1. Elevator stops.
+	2. Elevator opens doors if at a floor.
+	3. Elevator waits for operator.
