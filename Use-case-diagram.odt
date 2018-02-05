@@ -17,10 +17,19 @@ Main Success Scenario:
 12. New cycle starts here.
 
 Extensions:
-2a: User waits on elevator to perform its necessary actions.
-3a: Elevator goes past the triggered floor if down button is pushed and elevator is on its way up from another trigger.
-3b: Elevator goes past the triggered floor if up button is pushed and elevator is on its way down from another trigger.
-8a: By mistake more than one floor, the elevator stops at the nearest one that is in the same direction.
+2a: Elevator is busy
+	1. Elevator finishes current task, can pick up the user if in the same direction.
+	2. Elevator drives to the triggered floor.
+
+3a: Elevator goes past the triggered floor if down button is pushed and elevator is on 	its way up from earlier trigger.
+	1. Stops when it matches the same direction as desired by user
+
+3b: Elevator goes past the triggered floor if up button is pushed and elevator is on its way down from earlier trigger.
+	1. Stops when it matches the same direction as desired by user
+
+7a: User pushed several buttons by an accident
+	1. Stops at nearest floor in the direction the elevator is set at, then next and fourth until all floors have been visited.
+
 9a: Elevator stops at floors where a trigger for the same direction has appeared.
 
 Extensions: Jump from 2-3a instead of going from 2-3, edit this. 
