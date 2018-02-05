@@ -22,3 +22,5 @@ Extensions:
 3b: Elevator goes past the triggered floor if up button is pushed and elevator is on its way down from another trigger.
 8a: By mistake more than one floor, the elevator stops at the nearest one that is in the same direction.
 9a: Elevator stops at floors where a trigger for the same direction has appeared.
+
+Extensions: Jump from 2-3a instead of going from 2-3, edit this. 
