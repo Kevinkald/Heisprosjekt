@@ -11,10 +11,9 @@ Preconditions:
 
 Main Success Scenario:
 
-1. Program is activated.
-2. Elevator is in a defined state.
-3. Floor light activates respictivly to which floor sensor is activated.
-4. Elevator/floor panel activates.
+1. Elevator is in a defined state.
+2. Floor light activates respictivly to which floor sensor is activated.
+3. Elevator/floor panel activates.
 
 Extensions:
 

@@ -14,13 +14,14 @@ Main Success Scenario:
 
 1. User pushes/triggers floor-button [1,4] to select which floor to go to.
 2. The triggered floor button illuminates.
-3. Elevator sets direction[0=up, 1=down] towards the triggered floor.
-4. Elevator moves towards the desired floor.
-5. Floor light changes when passing floor sensor.
-5. Elevator stops when floor sensor is activated.
-6. Elevator opens door for 3 seconds.
-7. User exits the elevator.
-8. Elevator closes door.
+3. Floor button stops illuminating when released.
+4. Elevator sets direction[0=up, 1=down] towards the triggered floor.
+5. Elevator moves towards the desired floor.
+6. Floor light changes when passing floor sensor.
+7. Elevator stops when floor sensor is activated.
+8. Elevator opens door for 3 seconds.
+9. User exits the elevator.
+10. Elevator closes door.
 
 
 Extensions:
