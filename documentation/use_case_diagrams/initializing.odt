@@ -14,4 +14,4 @@ Extensions:
 
 2a: Elevator is in non- defined state:
 	1. Elevator goes down do nearest floor.
-  2. Elevator/floor panel activates
+  	2. Elevator/floor panel activates
