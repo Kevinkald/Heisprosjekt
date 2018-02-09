@@ -1,1 +1,17 @@
+Use case:
 
+Preconditions:
+
+1. Elevator is not under floor 1.
+2. Elevator is not above floor 4.
+
+Main Success Scenario:
+
+1. Program is activated
+2. Elevator/floor panel activates.
+
+Extensions:
+
+2a: Elevator is in non- defined state:
+	1. Elevator goes down do nearest floor.
+  	2. Elevator/floor panel activates
