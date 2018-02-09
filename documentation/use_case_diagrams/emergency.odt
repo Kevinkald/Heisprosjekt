@@ -23,3 +23,4 @@ Extensions:
 	1. Floor light-diode activates.
 	2. Door opens for 3 sec, door-open diode illuminates.
 	3. Door closes.
+	4. Door-open diode stops illuminating.
