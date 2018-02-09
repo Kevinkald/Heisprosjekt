@@ -7,6 +7,7 @@ Preconditions:
 
 1. User is inside elevator/user have been picked up.
 2. Elevator is in a defined state.
+3. Floor light is illuminating.
 3. Emergency button is not activated.
 
 Main Success Scenario:
@@ -15,6 +16,7 @@ Main Success Scenario:
 2. The triggered floor button illuminates.
 3. Elevator sets direction[0=up, 1=down] towards the triggered floor.
 4. Elevator moves towards the desired floor.
+5. Floor light changes when passing floor sensor.
 5. Elevator stops when floor sensor is activated.
 6. Elevator opens door for 3 seconds.
 7. User exits the elevator.
