@@ -1,5 +1,7 @@
 Use case:
 
+Initializing elevator:
+
 Preconditions:
 
 1. Elevator is not under floor 1.
