@@ -1,0 +1,34 @@
+Use case:
+
+Trigger:
+1. User pushes up/down button outside elevator:
+
+Preconditions:
+
+1. Elevator is in a defined state.
+2. Emergency button is not activated.
+
+Main Success Scenario:
+1. User pushes/triggers up or down button.
+2. The direction button illuminates.
+3. Elevator sets direction towards the triggered buttons floor.
+4. Elevator stops when the triggered floor sensor is activated.
+5. The triggered direction button stops illuminating.
+6. Elevator opens door.
+7. Open-door diode illuminates.
+8. User goes inside.
+9. Elevator closes doors after 3 seconds.
+10. Open-door button stops illuminating.
+
+
+Extensions:
+
+2a: Elevator is busy
+	1. Elevator finishes current task, can pick up the user if in the same direction.
+	2. Elevator drives to the triggered floor.
+
+3a: Elevator goes past the triggered floor if down button is pushed and elevator is on 	its way up from earlier trigger.
+	1. Stops when it matches the same direction as desired by user
+
+3b: Elevator goes past the triggered floor if up button is pushed and elevator is on its way down from earlier trigger.
+	1. Stops when it matches the same direction as desired by user

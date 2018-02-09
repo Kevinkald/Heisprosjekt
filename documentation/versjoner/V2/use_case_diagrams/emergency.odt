@@ -1,0 +1,26 @@
+Use case:
+
+Trigger:
+1. User triggers emergency button:
+
+precondition:
+
+1. User needs to be inside elevator.
+
+Main Success Scenario:
+
+1. User pushes/triggers stop button.
+2. Stop button illuminates.
+3. Elevator stops immediately.
+4. All buttons disabled.
+5. Elevator order list is cleared.
+6. Stop button released, buttons enabled.
+7. Emergency button stops illuminating.
+
+Extensions:
+
+2a: Elevator stops at a defined floor.
+	1. Floor light-diode activates.
+	2. Door opens for 3 sec, door-open diode illuminates.
+	3. Door closes.
+	4. Door-open diode stops illuminating.
