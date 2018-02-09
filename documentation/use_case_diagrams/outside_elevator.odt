@@ -10,11 +10,15 @@ Preconditions:
 
 Main Success Scenario:
 1. User pushes/triggers up or down button.
-2. Elevator sets direction towards the triggered buttons floor.
-3. Elevator stops when the triggered floor sensor is activated.
-4. Elevator opens door.
-5. User goes inside.
-6. Elevator closes doors after 3 seconds.
+2. The direction button illuminates.
+3. Elevator sets direction towards the triggered buttons floor.
+4. Elevator stops when the triggered floor sensor is activated.
+5. The triggered direction button stops illuminating.
+6. Elevator opens door.
+7. Open-door diode illuminates.
+8. User goes inside.
+9. Elevator closes doors after 3 seconds.
+10. Open-door button stops illuminating.
 
 
 Extensions:
