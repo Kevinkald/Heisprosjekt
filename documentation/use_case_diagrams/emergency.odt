@@ -14,6 +14,7 @@ Main Success Scenario:
 4. All buttons disabled.
 5. Elevator order list is cleared.
 6. Stop button released, buttons enabled.
+7. Emergency button stops illuminating.
 
 Extensions:
 
