@@ -1,0 +1,17 @@
+Use cases:
+
+User inside elevator:
+
+Main Success Scenario:
+
+1. User pushes/holds stop button.
+2. Elevator stops  immediately.
+3. All buttons disabled
+4. Stop button released, buttons enabled.
+|
+8. New scenario.
+
+Extensions:
+
+2a: Elevator stops in a floor
+	1. Door opens for 3 sec, then closes.
