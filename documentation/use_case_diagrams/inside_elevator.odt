@@ -14,11 +14,11 @@ Main Success Scenario:
 
 1. User pushes/triggers floor-button [1,4] to select which floor to go to.
 2. The triggered floor button illuminates.
-3. Floor button stops illuminating when released.
-4. Elevator sets direction[0=up, 1=down] towards the triggered floor.
-5. Elevator moves towards the desired floor.
-6. Floor light changes when passing floor sensor.
-7. Elevator stops when floor sensor is activated.
+3. Elevator sets direction[0=up, 1=down] towards the triggered floor.
+4. Elevator moves towards the desired floor.
+5. Floor light changes when passing floor sensor.
+6. Elevator stops when floor sensor is activated.
+7. Floor button stops illuminating.
 8. Elevator opens door for 3 seconds.
 9. User exits the elevator.
 10. Elevator closes door.
@@ -29,6 +29,6 @@ Extensions:
 1a: User pushed several buttons by an accident
 	1. Stops at nearest floor in the direction the elevator is set at, then next and fourth until all floors have been visited.
 
-3a: In case of queue
+4a: In case of queue
 	1. Elevator continues in the set direction as previously. Direction is changed when all floors have been visited down/up a direction.
 	2. Elevator stops at floors wanting to go the same direction.
