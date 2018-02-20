@@ -37,17 +37,14 @@ void stopElevator(void) {
 	elev_set_motor_direction(DIRN_STOP);
 	elev_set_stop_lamp(1);
 
-	if (elev_get_floor_sensor_signal()!=-1) {
-		//open door by turning on door open light.
-		// for 3 sek
-		//then close
+	if (elev_get_floor_sensor_signal()!=-1) { 
 		elev_set_door_open_lamp(1);
 		int clock_speed = CLOCKS_PER_SEC;
+		int totalClocks = clock_speed*3;
 		int count;
-		while (count < (clock_speed * 3)) {
+		while (count < totalClocks) {
 			count++;
 		}
 		elev_set_door_open_lamp(0);
 	}
 }
-
