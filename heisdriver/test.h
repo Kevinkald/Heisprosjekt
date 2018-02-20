@@ -8,3 +8,5 @@
 int driveToFloor(int floor);
 
 void stopElevator(void);
+
+void updateOrders(void);

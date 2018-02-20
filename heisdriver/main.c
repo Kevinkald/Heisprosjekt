@@ -1,6 +1,7 @@
 #include "elev.h"
 #include <stdio.h>
 #include "test.h"
+#include <vector>
 
 
 int main() {
@@ -9,11 +10,24 @@ int main() {
         printf("Unable to initialize elevator hardware!\n");
         return 1;
     }
+	
+	//int direction_up[4] = { 0,0,0,0 };	Denne legger en ener i 
+	//int direction_down[4] = { 0,0,0,0 };	indeks 0-3 for etasje 1-4
+	//int ordered_floors[4] = { 0,0,0,0 };
+	
+	//eller
 
-    int gotofloor = 4;
+	//vector<int> ordered_up;				Denne holder etasjenr, må lage funksjoner
+	//vector<int> ordered_down;				som adder og sjekker etasjene som legges til
+	//vector<int> ordered_floors;
+
+
+	//må iterate over button_channel_matrix
+
+    int floor = 4;
 
     while (elev_get_stop_signal!=1) { //push stop button to continue
-    	driveToFloor(gotofloor);
+    	driveToFloor(floor);
     }
 
     printf("Press STOP button to stop elevator and exit program.\n");

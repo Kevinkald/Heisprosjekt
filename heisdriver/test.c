@@ -48,3 +48,11 @@ void stopElevator(void) {
 		elev_set_door_open_lamp(0);
 	}
 }
+
+void updateOrders(void) {
+	for (int i = 0; i < N_BUTTONS) {
+		for (int j = 0; j < N_FLOORS) {
+			if (button_channel_matrix[i][j])
+		}
+	}
+}

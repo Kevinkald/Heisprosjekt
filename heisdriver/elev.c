@@ -21,7 +21,6 @@ static const int lamp_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {LIGHT_UP4, LIGHT_DOWN4, LIGHT_COMMAND4},
 };
 
-
 static const int button_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {BUTTON_UP1, BUTTON_DOWN1, BUTTON_COMMAND1},
     {BUTTON_UP2, BUTTON_DOWN2, BUTTON_COMMAND2},
