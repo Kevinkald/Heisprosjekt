@@ -1,6 +1,9 @@
 //Floors = 1,2,3,4
 //elev_get_floor_sensor_signal gives signals 0-3 for floor 1-4
-bool driveToFloor(int floor) {
+#include "test.h"
+
+
+int driveToFloor(int floor) {
 
 	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
 		elev_set_motor_direction(DIRN_DOWN);
@@ -12,15 +15,15 @@ bool driveToFloor(int floor) {
 	}
 
 	while (elev_get_floor_sensor_signal() != (floor-1) {
-		if (floor > (elev_get_floor_sensor_signal()+1)) {
+		if ((floor-1) > elev_get_floor_sensor_signal() {
 			elev_set_motor_direction(DIRN_UP);
 		}
 
-		else if (floor < (elev_get_floor_sensor_signal() + 1)) {
+		else if ((floor-1) < elev_get_floor_sensor_signal() {
 			elev_set_motor_direction(DIRN_DOWN);
 		}
 
-		while (floor != (elev_get_floor_sensor_signal() + 1)) {
+		while ((floor-1) != elev_get_floor_sensor_signal()) {
 			printf("driving elevator towards floor");
 		}
 
@@ -28,5 +31,5 @@ bool driveToFloor(int floor) {
 
 	elev_set_motor_direction(DIRN_STOP);
 
-	return true;
+	return 1;
 }

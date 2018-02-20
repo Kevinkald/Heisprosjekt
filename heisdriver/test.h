@@ -4,4 +4,4 @@
 #include "channels.h"
 #include <iostream>
 
-bool driveToFloor(int floor) {}
+int driveToFloor(int floor);

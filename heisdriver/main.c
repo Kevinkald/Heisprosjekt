@@ -1,12 +1,18 @@
 #include "elev.h"
 #include <stdio.h>
-
+#include "test.h"
 
 int main() {
     // Initialize hardware
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
         return 1;
+    }
+
+    int gotofloor = 4;
+
+    while (elev_get_stop_signal!=1) { //push stop button to continue
+    	driveToFloor(gotofloor);
     }
 
     printf("Press STOP button to stop elevator and exit program.\n");
