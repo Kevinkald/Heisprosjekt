@@ -1,0 +1,25 @@
+//Test jan
+void updateFloorList(int floor, int direction){
+	for(i= 0; i< 4; i++){
+		if(direction == 0 && floor = i){
+			direction_up[i] = 1;
+		}
+		if(direction == 0 && floor = i){
+			direction_down[i] = 1;
+		}
+		
+		
+void checkFloorbuttons(){
+		for(int i = 0; i < 4; i++){
+			if(elev_get_button_signal(elev_button_ type 0,i) == 1){
+				updateFloorList(i, 1)
+				state = UP
+				
+			}
+			else if(elev_get_button_signal(1,i) == 1){
+				updateFloorList(i, 0)
+				state = DOWN
+			}
+			else(else if(elev_get_button_signal(2,i) == 1){
+				
+			}	
