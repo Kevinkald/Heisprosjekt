@@ -11,9 +11,9 @@ int main() {
         return 1;
     }
 	
-	//int direction_up[4] = { 0,0,0,0 };	Denne legger en ener i 
-	//int direction_down[4] = { 0,0,0,0 };	indeks 0-3 for etasje 1-4
-	//int ordered_floors[4] = { 0,0,0,0 };
+	int direction_up[4]   =   { 0,0,0,0 };		Denne legger en ener i 
+	int direction_down[4] =   { 0,0,0,0 };		indeks 0-3 for etasje 1-4
+	int ordered_floors[4] =   { 0,0,0,0 };
 	
 	//eller
 
