@@ -14,8 +14,26 @@ wait. Stop motor = motor_dir_stop
 
 -checkFloorButtons: 2 loops, legger til bestillinger i de tre listene, 
 
--clearAllLists: gjør det navnet sier
-
--updateLists: 
+-clearAllLists: gjør det navnet sier 
 
 -driveToFloor(int floor): klear visited floor
+
+-lights
+
+-
+
+Gjøremål:
+
+
+Kevin:
+-elevInit: må ta hensyn til mellom to etasjer
+Case STOP:
+-clearAllLists:
+-driveToFloor(int floor): klear visited floor
+
+
+Jan:
+
+-Case idle:
+-checkFloorButtons:
+
