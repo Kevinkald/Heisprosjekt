@@ -2,8 +2,8 @@
 #include "elev.h"
 #include "io.h"
 #include "channels.h"
-#include <iostream>
 #include <time.h>
+#include <stdio.h>
 
 int driveToFloor(int floor);
 

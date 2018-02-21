@@ -1,7 +1,6 @@
 #include "elev.h"
 #include <stdio.h>
 #include "test.h"
-#include <vector>
 
 
 int main() {
@@ -26,8 +25,11 @@ int main() {
 
     int floor = 4;
 
-    while (elev_get_stop_signal!=1) { //push stop button to continue
+    while (elev_get_stop_signal()!=1) { //push stop button to continue
     	driveToFloor(floor);
+    }
+    if (elev_get_stop_signal()){
+        stopElevator();
     }
 
     printf("Press STOP button to stop elevator and exit program.\n");
