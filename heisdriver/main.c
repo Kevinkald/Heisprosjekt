@@ -23,46 +23,49 @@ int main() {
     
 
     typedef enum elevStatus { 
-    idle = 0,
-    goUp = 1,
-    goDown = 2,
-    stop = 3
+    IDLE = 0,
+    UP = 1,
+    DOWN = 2,
+    ERROR = 3
 } status;
-    status state = idle;
+    
+    status state = IDLE;
+    
     while (1) {   
         
         switch(state){
-            case idle:
+            case IDLE:
                   
-                state = (state)checkFloorButtons();
+                state = (status)checkFloorButtons();
                 printf("Hello\n");
                 break;
             
-            case goUp:
+            case UP:
                 printf("Going up\n");
                 elev_set_motor_direction(DIRN_UP);
                 if(elev_get_floor_sensor_signal() == 3){
-                    state = stop;
+                    state = ERROR;
                 }
 
                 break;
 
-            case goDown:
+            case DOWN:
                 printf("going down\n");
                 elev_set_motor_direction(DIRN_DOWN);
 
                 if(elev_get_floor_sensor_signal() == 0){
-                    state = idle;
+                    state = ERROR;
                 }
                 break;
 
-            case stop:
+            case ERROR:
                 elev_set_motor_direction(DIRN_STOP);
+                state = IDLE;
                 printf("stop\n");
                 break;
 
             default:
-                state = idle;
+                state = IDLE;
                 break;
 
         }
