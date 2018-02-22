@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "test.h"
 #include "idle.h"
-#include <vector>
 
 
 int main() {
@@ -21,6 +20,8 @@ int main() {
 	//vector<int> ordered_up;				Denne holder etasjenr, må lage funksjoner
 	//vector<int> ordered_down;				som adder og sjekker etasjene som legges til
 	//vector<int> ordered_floors;
+    
+
     typedef enum elevStatus { 
     idle = 0,
     goUp = 1,
@@ -31,16 +32,17 @@ int main() {
     while (1) {   
         
         switch(state){
-            case idle:    
+            case idle:
+                  
+                state = (state)checkFloorButtons();
                 printf("Hello\n");
-                state = (status)checkFloorButtons();
                 break;
             
             case goUp:
                 printf("Going up\n");
                 elev_set_motor_direction(DIRN_UP);
                 if(elev_get_floor_sensor_signal() == 3){
-                    state = idle;
+                    state = stop;
                 }
 
                 break;
@@ -56,7 +58,7 @@ int main() {
 
             case stop:
                 elev_set_motor_direction(DIRN_STOP);
-                state = idle;
+                printf("stop\n");
                 break;
 
             default:
