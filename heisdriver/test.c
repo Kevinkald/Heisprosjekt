@@ -45,14 +45,26 @@ void stopElevator(void) {
 		while (count < totalClocks) {
 			count++;
 		}
-		elev_set_door_open_lamp(0);
+	elev_set_door_open_lamp(0);
 	}
 }
 
-void updateOrders(void) {
-	for (int i = 0; i < N_BUTTONS) {
-		for (int j = 0; j < N_FLOORS) {
-			if (button_channel_matrix[i][j])
+void checkFloorButtons(int up[4],int down[4], int command[4]) {
+
+	for (int i = 0; i < 4; i++) {
+
+		int signalUp = elev_get_button_signal(BUTTON_CALL_UP, i);
+		int signalDown = elev_get_button_signal(BUTTON_CALL_DOWN, i);
+		int signalCommand = elev_get_button_signal(BUTTON_COMMAND, i);
+
+		if (!up[i]) {
+			up[i] = signalUp;
+		}
+		if (!down[i]) {
+			down[i] = signalDown;
+		}
+		if (!command[i]) {
+			command[i] = signalCommand;
 		}
 	}
 }
