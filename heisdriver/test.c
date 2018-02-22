@@ -2,17 +2,9 @@
 //elev_get_floor_sensor_signal gives signals 0-3 for floor 1-4
 #include "test.h"
 #include "elev.h"
+#include <time.h>
 
 int driveToFloor(int floor) {
-
-	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
-		elev_set_motor_direction(DIRN_DOWN);
-		while (elev_get_floor_sensor_signal() == -1) {
-			printf("driving down");
-		}
-		elev_set_motor_direction(DIRN_UP); //effective stopping motor
-		elev_set_motor_direction(DIRN_STOP);
-	}
 
 	while (elev_get_floor_sensor_signal() != (floor-1)) {
 		if ((floor-1) > elev_get_floor_sensor_signal()) {
@@ -39,13 +31,8 @@ void stopElevator(void) {
 
 	if (elev_get_floor_sensor_signal()!=-1) { 
 		elev_set_door_open_lamp(1);
-		int clock_speed = CLOCKS_PER_SEC;
-		int totalClocks = clock_speed*3;
-		int count;
-		while (count < totalClocks) {
-			count++;
-		}
-	elev_set_door_open_lamp(0);
+		waitNSeconds(3);
+		elev_set_door_open_lamp(0);
 	}
 }
 
@@ -67,4 +54,20 @@ void checkFloorButtons(int up[4],int down[4], int command[4]) {
 			command[i] = signalCommand;
 		}
 	}
+}
+
+void waitNSeconds(int N) {
+
+	printf("Starting waiting for: ", N, " seconds");
+	clock_t before = clock();
+	int seconds = 0;
+	int iterations = 0;
+
+	do {
+		clock_t difference = clock() - before;
+		seconds = difference / CLOCKS_PER_SEC;
+		iterations++;
+	} while (seconds < N)
+
+	printf("Waited ", N, " seconds, and it took ", iterations, " iterations");
 }

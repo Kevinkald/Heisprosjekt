@@ -51,6 +51,16 @@ int elev_init(void) {
     elev_set_door_open_lamp(0);
     elev_set_floor_indicator(0);
 
+	//making sure that elevator starts in defined floor
+	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
+		elev_set_motor_direction(DIRN_DOWN);
+		while (elev_get_floor_sensor_signal() == -1) {
+			printf("driving down\n");
+		}
+		elev_set_motor_direction(DIRN_UP); //effective stopping motor
+		elev_set_motor_direction(DIRN_STOP);
+	}
+
     // Return success.
     return 1;
 }
