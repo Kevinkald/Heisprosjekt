@@ -1,10 +1,7 @@
-#ifndef __INCLUDE_DRIVER_H__
-#define __INCLUDE_DRIVER_H__
-
-
+#pragma once
 // Number of floors
 #define N_FLOORS 4
 
-checkFloorButtons();
+void updateLists(void);
+int checkFloorButtons(void);
 
-#endif // #ifndef __INCLUDE_DRIVER_H__

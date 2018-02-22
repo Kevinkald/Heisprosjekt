@@ -1,6 +1,7 @@
 #include "elev.h"
 #include <stdio.h>
 #include "test.h"
+#include "idle.h"
 #include <vector>
 
 
@@ -23,7 +24,7 @@ int main() {
     typedef enum elevStatus { 
     idle = 0,
     goUp = 1,
-    goDown = 2.
+    goDown = 2,
     stop = 3
 } status;
     status state = idle;
@@ -31,25 +32,36 @@ int main() {
         
         switch(state){
             case idle:    
-                printf("Hello\n")
+                printf("Hello\n");
+                state = (status)checkFloorButtons();
                 break;
             
             case goUp:
-                elev_set_motor_direction(DIRN_DOWN);
-                                
+                printf("Going up\n");
+                elev_set_motor_direction(DIRN_UP);
+                if(elev_get_floor_sensor_signal() == 3){
+                    state = idle;
+                }
+
                 break;
 
             case goDown:
-                elev_set_motor_direction(DIRN_UP);
+                printf("going down\n");
+                elev_set_motor_direction(DIRN_DOWN);
 
+                if(elev_get_floor_sensor_signal() == 0){
+                    state = idle;
+                }
                 break;
 
             case stop:
                 elev_set_motor_direction(DIRN_STOP);
+                state = idle;
                 break;
 
             default:
                 state = idle;
+                break;
 
         }
     }
