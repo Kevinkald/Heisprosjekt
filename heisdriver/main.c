@@ -20,32 +20,37 @@ int main() {
 	//vector<int> ordered_up;				Denne holder etasjenr, må lage funksjoner
 	//vector<int> ordered_down;				som adder og sjekker etasjene som legges til
 	//vector<int> ordered_floors;
+    typedef enum elevStatus { 
+    idle = 0,
+    goUp = 1,
+    goDown = 2.
+    stop = 3
+} status;
+    status state = idle;
+    while (1) {   
+        
+        switch(state){
+            case idle:    
+                printf("Hello\n")
+                break;
+            
+            case goUp:
+                elev_set_motor_direction(DIRN_DOWN);
+                                
+                break;
 
+            case goDown:
+                elev_set_motor_direction(DIRN_UP);
 
-	//må iterate over button_channel_matrix
+                break;
 
-    int floor = 4;
+            case stop:
+                elev_set_motor_direction(DIRN_STOP);
+                break;
 
-    while (elev_get_stop_signal!=1) { //push stop button to continue
-    	driveToFloor(floor);
-    }
+            default:
+                state = idle;
 
-    printf("Press STOP button to stop elevator and exit program.\n");
-
-    elev_set_motor_direction(DIRN_UP);
-
-    while (1) {
-        // Change direction when we reach top/bottom floor
-        if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
-            elev_set_motor_direction(DIRN_DOWN);
-        } else if (elev_get_floor_sensor_signal() == 0) {
-            elev_set_motor_direction(DIRN_UP);
-        }
-
-        // Stop elevator and exit program if the stop button is pressed
-        if (elev_get_stop_signal()) {
-            elev_set_motor_direction(DIRN_STOP);
-            break;
         }
     }
 
