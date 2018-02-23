@@ -36,29 +36,29 @@ void stopElevator(void) {
 	}
 }
 
-void checkFloorButtons(int up[4],int down[4], int command[4]) {
+void checkFloorButtons(int *up[4],int *down[4], int *command[4]) {
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 
 		int signalUp = elev_get_button_signal(BUTTON_CALL_UP, i);
-		int signalDown = elev_get_button_signal(BUTTON_CALL_DOWN, i);
+		int signalDown = elev_get_button_signal(BUTTON_CALL_DOWN, i+1);
 		int signalCommand = elev_get_button_signal(BUTTON_COMMAND, i);
 
-		if (!up[i]) {
-			up[i] = signalUp;
+		if (!(*up[i])) {
+			*up[i] = signalUp;
 		}
-		if (!down[i]) {
-			down[i] = signalDown;
+		if (!(*down[i])) {
+			*down[i] = signalDown;
 		}
-		if (!command[i]) {
-			command[i] = signalCommand;
+		if (!(*command[i])) {
+			*command[i] = signalCommand;
 		}
 	}
 }
 
 void waitNSeconds(int N) {
 
-	printf("Starting waiting for: ", N, " seconds");
+	//printf("%d", "Starting waiting for: ", N, " seconds");
 	clock_t before = clock();
 	int seconds = 0;
 	int iterations = 0;
@@ -67,7 +67,7 @@ void waitNSeconds(int N) {
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
 		iterations++;
-	} while (seconds < N)
+	} while (seconds < N);
 
-	printf("Waited ", N, " seconds, and it took ", iterations, " iterations");
+	//printf("%d, %d","Waited ", N, " seconds, and it took ", iterations, " iterations");
 }
