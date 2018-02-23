@@ -4,13 +4,13 @@
 
 #include <stdio.h>
 
-
 int main() {
     // Initialize hardware
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
         return 1;
     }
+
 	printf("statrted program");
 
 	while (1) {
@@ -27,7 +27,6 @@ int main() {
         //driveToFloor(n);
 
 
-	
     }
     return 0;
 }

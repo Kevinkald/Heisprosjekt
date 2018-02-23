@@ -8,6 +8,7 @@
 #define N_FLOORS 4
 
 
+
 void timer(int N_Seconds) {
 
 	clock_t before = clock();
@@ -18,6 +19,7 @@ void timer(int N_Seconds) {
 		seconds = difference / CLOCKS_PER_SEC;
 	} while (seconds < N_Seconds);
 }
+
 
 void openDoor(void) {
 	elev_set_door_open_lamp(1);
@@ -81,4 +83,5 @@ void checkOutButtons(){
             setOrders(BUTTON_COMMAND, 3);
     }
 }
+
 
