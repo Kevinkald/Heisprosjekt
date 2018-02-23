@@ -10,5 +10,7 @@ void openDoor(void);
 
 void checkStopElevator(void);
 
+void orderHandler(void);
+
 
 

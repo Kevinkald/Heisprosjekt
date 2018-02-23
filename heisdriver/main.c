@@ -20,11 +20,7 @@ int main() {
         checkOutButtons();
         printmatrix();
         
-
-
-        //int n = 4;
-
-        //driveToFloor(n);
+        orderHandler();
 
 
     }

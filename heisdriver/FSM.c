@@ -22,6 +22,7 @@ void timer(int N_Seconds) {
 
 
 void openDoor(void) {
+	elev_set_motor_direction(DIRN_STOP);
 	elev_set_door_open_lamp(1);
     timer(3);
     elev_set_door_open_lamp(0);
@@ -85,3 +86,29 @@ void checkOutButtons(){
 }
 
 
+void orderHandler(void) {
+
+	for (int i = 0; i < 3; i++) {
+
+		int currentFloor = elev_get_floor_sensor_signal();
+
+			if (getOrder(BUTTON_CALL_UP,i)) {
+				
+				if (i > currentFloor) {
+					elev_set_motor_direction(DIRN_UP);
+					while (elev_get_floor_sensor_signal()!=i) {
+						printf("%s\n","driving up towards floor" );
+					}
+					openDoor();
+					clearOrder(BUTTON_CALL_UP,i);
+				}
+
+			}
+
+
+
+
+		
+	}
+
+}
