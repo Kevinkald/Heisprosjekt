@@ -1,6 +1,6 @@
 #include "elev.h"
 #include <stdio.h>
-#include "idle.h"
+#include "FSM.h"
 
 
 int main() {
@@ -11,13 +11,29 @@ int main() {
     }
 	
 
-    while(1){
-        printf("Hello");
+	while (1) {
+
+        while (elev_get_stop_signal()){
+            stopElevator();
+            if (elev_get_floor_sensor_signal()!=-1) { 
+                elev_set_door_open_lamp(1);
+                timer(3);
+                elev_set_door_open_lamp(0);
+            }
+        }
+        elev_set_stop_lamp(0);
+
+        checkOutButtons()
+        printmatrix()
+        break;
+
+
+        int n = 4;
+
+        driveToFloor(n);
+
+
+	
     }
-
-
-
-
-
     return 0;
 }

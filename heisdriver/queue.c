@@ -9,8 +9,8 @@
 
 
 int matrixOrderList[3][4] = {
-	{ 0,0,0,0 },  //Direction up 
-	{ 0,0,0,0 },  //Direction down
+	{ 0,0,0,0 },  //order list direction up 
+	{ 0,0,0,0 },  //order list direction down
     { 0,0,0,0 }   //Request button 
 }
     
@@ -55,5 +55,15 @@ void clearAll(){
 				}
 			}
 		}
+	}
+}
+
+
+void printmatrix(){
+	for(int i = 0; i < 3; i++){
+		for (int j = 0; i < 4; j++){
+			printf("%d" , matrixOrderList[i][j]);
+		}
+		printf("/n");
 	}
 }
