@@ -16,7 +16,7 @@ int driveToFloor(int floor) {
 		}
 
 		while ((floor-1) != elev_get_floor_sensor_signal()) {
-			printf("driving elevator towards floor");
+			printf("driving elevator towards floor  ");
 		}
 	}
 
@@ -25,16 +25,7 @@ int driveToFloor(int floor) {
 	return 1;
 }
 
-void stopElevator(void) {
-	elev_set_motor_direction(DIRN_STOP);
-	elev_set_stop_lamp(1);
 
-	if (elev_get_floor_sensor_signal()!=-1) { 
-		elev_set_door_open_lamp(1);
-		waitNSeconds(3);
-		elev_set_door_open_lamp(0);
-	}
-}
 
 void checkFloorButtons(int *up[4],int *down[4], int *command[4]) {
 
@@ -56,18 +47,4 @@ void checkFloorButtons(int *up[4],int *down[4], int *command[4]) {
 	}
 }
 
-void waitNSeconds(int N) {
 
-	//printf("%d", "Starting waiting for: ", N, " seconds");
-	clock_t before = clock();
-	int seconds = 0;
-	int iterations = 0;
-
-	do {
-		clock_t difference = clock() - before;
-		seconds = difference / CLOCKS_PER_SEC;
-		iterations++;
-	} while (seconds < N);
-
-	//printf("%d, %d","Waited ", N, " seconds, and it took ", iterations, " iterations");
-}
