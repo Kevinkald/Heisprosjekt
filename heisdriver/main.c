@@ -1,7 +1,11 @@
 #include "elev.h"
 #include <stdio.h>
+<<<<<<< HEAD
 #include "FSM.h"
 //#include "queue.c"
+=======
+#include "test.h"
+>>>>>>> origin
 
 
 int main() {
@@ -27,7 +31,16 @@ int main() {
 
         elev_set_motor_direction(DIRN_UP);
 
+<<<<<<< HEAD
         
+=======
+    while (elev_get_stop_signal()!=1) { //push stop button to continue
+    	driveToFloor(floor);
+    }
+    if (elev_get_stop_signal()){
+        stopElevator();
+    }
+>>>>>>> origin
 
 
 

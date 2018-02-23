@@ -6,6 +6,18 @@
 
 int driveToFloor(int floor) {
 
+<<<<<<< HEAD
+=======
+	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
+		elev_set_motor_direction(DIRN_DOWN);
+		while (elev_get_floor_sensor_signal() == -1) {
+			printf("driving down\n");
+		}
+		elev_set_motor_direction(DIRN_UP); //effective stopping motor
+		elev_set_motor_direction(DIRN_STOP);
+	}
+
+>>>>>>> origin
 	while (elev_get_floor_sensor_signal() != (floor-1)) {
 		if ((floor-1) > elev_get_floor_sensor_signal()) {
 			elev_set_motor_direction(DIRN_UP);
@@ -16,7 +28,11 @@ int driveToFloor(int floor) {
 		}
 
 		while ((floor-1) != elev_get_floor_sensor_signal()) {
+<<<<<<< HEAD
 			printf("driving elevator towards floor  ");
+=======
+			printf("driving elevator towards floor\n");
+>>>>>>> origin
 		}
 	}
 
@@ -25,6 +41,7 @@ int driveToFloor(int floor) {
 	return 1;
 }
 
+<<<<<<< HEAD
 
 
 void checkFloorButtons(int *up[4],int *down[4], int *command[4]) {
@@ -43,8 +60,31 @@ void checkFloorButtons(int *up[4],int *down[4], int *command[4]) {
 		}
 		if (!(*command[i])) {
 			*command[i] = signalCommand;
+=======
+void stopElevator(void) {
+	elev_set_motor_direction(DIRN_STOP);
+	elev_set_stop_lamp(1);
+
+	if (elev_get_floor_sensor_signal()!=-1) { 
+		elev_set_door_open_lamp(1);
+		int clock_speed = CLOCKS_PER_SEC;
+		int totalClocks = clock_speed*3;
+		int count = 0;
+		while (count < totalClocks) {
+			count++;
+>>>>>>> origin
 		}
 	}
 }
 
+<<<<<<< HEAD
 
+=======
+//void updateOrders(void) {
+//	for (int i = 0; i < N_BUTTONS) {
+//		for (int j = 0; j < N_FLOORS) {
+//			if (button_channel_matrix[i][j])
+//		}
+//	}
+//
+>>>>>>> origin
