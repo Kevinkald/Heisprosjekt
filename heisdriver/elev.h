@@ -6,6 +6,7 @@
 #define __INCLUDE_DRIVER_H__
 
 
+
 // Number of floors
 #define N_FLOORS 4
 
@@ -117,7 +118,6 @@ int elev_get_button_signal(elev_button_type_t button, int floor);
   @param value Non-zero value turns lamp on, 0 turns lamp off.
 */
 void elev_set_button_lamp(elev_button_type_t button, int floor, int value);
-
 
 
 #endif // #ifndef __INCLUDE_DRIVER_H__

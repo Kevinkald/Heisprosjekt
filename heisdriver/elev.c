@@ -8,8 +8,10 @@
 #include "elev.h"
 #include "io.h"
 
+
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // Number of signals and lamps on a per-floor basis (excl sensor)
 #define N_BUTTONS 3
@@ -50,6 +52,16 @@ int elev_init(void) {
     elev_set_stop_lamp(0);
     elev_set_door_open_lamp(0);
     elev_set_floor_indicator(0);
+
+	//making sure that elevator starts in defined floor
+	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
+		elev_set_motor_direction(DIRN_DOWN);
+		while (elev_get_floor_sensor_signal() == -1) {
+			printf("driving down\n");
+		}
+		elev_set_motor_direction(DIRN_UP); //effective stopping motor
+		elev_set_motor_direction(DIRN_STOP);
+	}
 
     // Return success.
     return 1;
@@ -143,3 +155,5 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);
 }
+
+

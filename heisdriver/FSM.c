@@ -38,7 +38,7 @@ void openDoor(void) {
 }
 
 state status = IDLE;
-elev_motor_direction_t motorDir;
+
 
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
@@ -81,14 +81,13 @@ void orderHandling(void){
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
 								clearOrder(BUTTON_CALL_DOWN, i);
+								clearOrder(BUTTON_CALL_UP, i);
 								clearOrder(BUTTON_COMMAND, i);
 							}
 
 						}	
 				}
-				break;*/
-				
-		
+				break;
 
 		case UP:
 				printf("UP\n");
