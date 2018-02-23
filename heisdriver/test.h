@@ -3,10 +3,6 @@
 #include "channels.h"
 #include <time.h>
 #include <stdio.h>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin
 
 int driveToFloor(int floor);
 

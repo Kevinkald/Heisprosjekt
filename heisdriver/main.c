@@ -1,11 +1,7 @@
 #include "elev.h"
 #include <stdio.h>
-<<<<<<< HEAD
 #include "FSM.h"
-//#include "queue.c"
-=======
 #include "test.h"
->>>>>>> origin
 
 
 int main() {
@@ -15,8 +11,8 @@ int main() {
         return 1;
     }
 	
-	while (1) {
 
+	while (1) {
 
         while (elev_get_stop_signal()){
             stopElevator();
@@ -29,28 +25,12 @@ int main() {
         elev_set_stop_lamp(0);
 
 
-        elev_set_motor_direction(DIRN_UP);
+        int n = 4;
 
-<<<<<<< HEAD
-        
-=======
-    while (elev_get_stop_signal()!=1) { //push stop button to continue
-    	driveToFloor(floor);
-    }
-    if (elev_get_stop_signal()){
-        stopElevator();
-    }
->>>>>>> origin
-
-
-
-
-    }
-
-    
+        driveToFloor(n);
 
 
 	
-    
+    }
     return 0;
 }
