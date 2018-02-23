@@ -1,7 +1,6 @@
 #include "elev.h"
 #include <stdio.h>
 #include "FSM.h"
-#include "test.h"
 
 
 int main() {
