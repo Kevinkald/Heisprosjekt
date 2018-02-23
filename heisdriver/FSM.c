@@ -88,27 +88,33 @@ void checkOutButtons(){
 
 void orderHandler(void) {
 
-	for (int i = 0; i < 3; i++) {
+	int currentFloor = elev_get_floor_sensor_signal();
 
-		int currentFloor = elev_get_floor_sensor_signal();
+	for (int i = currentFloor; i < 4; i++) {
 
-			if (getOrder(BUTTON_CALL_UP,i)) {
-				
-				if (i > currentFloor) {
-					elev_set_motor_direction(DIRN_UP);
-					while (elev_get_floor_sensor_signal()!=i) {
-						printf("%s\n","driving up towards floor" );
-					}
+			if (getOrder(BUTTON_CALL_UP,i) || getOrder(BUTTON_COMMAND,i)) {
+				elev_set_motor_direction(DIRN_UP);
+				if (elev_get_floor_sensor_signal()==i) {
 					openDoor();
 					clearOrder(BUTTON_CALL_UP,i);
+					clearOrder(BUTTON_COMMAND,i);
 				}
 
-			}
-
-
-
-
-		
+			}	
 	}
+
+	/*for (int i = currentFloor; i >= 0; i--) {
+
+			if (getOrder(BUTTON_CALL_DOWN,i) || getOrder(BUTTON_COMMAND,i)) {
+				elev_set_motor_direction(DIRN_DOWN);
+				if (elev_get_floor_sensor_signal()==i) {
+					openDoor();
+					clearOrder(BUTTON_CALL_DOWN,i);
+					clearOrder(BUTTON_COMMAND,i);
+				}
+
+			}	
+	}
+	*/
 
 }

@@ -12,6 +12,7 @@ int matrixOrderList[3][4] = {
 	{ 0,0,0,0 },  //order list direction up 1 - 3 floor
 	{ 0,0,0,0 },  //order list direction down 2 - 3 floor
     { 0,0,0,0 }   //Request button 1 - 4 floor
+};
 
 
 
