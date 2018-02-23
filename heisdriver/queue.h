@@ -1,6 +1,6 @@
 #pragma once
 
-#include "elev.c"
+#include "elev.h"
 
 void setOrders(elev_button_type_t orderButton, int floor);
 int getOrder(elev_button_type_t orderButton, int floor );

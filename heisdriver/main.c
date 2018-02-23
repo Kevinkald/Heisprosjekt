@@ -1,6 +1,8 @@
 #include "elev.h"
-#include <stdio.h>
 #include "FSM.h"
+#include "queue.h"
+
+#include <stdio.h>
 
 
 int main() {
@@ -9,28 +11,20 @@ int main() {
         printf("Unable to initialize elevator hardware!\n");
         return 1;
     }
-	
+	printf("statrted program");
 
 	while (1) {
+		
+        checkStopElevator();
 
-        while (elev_get_stop_signal()){
-            stopElevator();
-            if (elev_get_floor_sensor_signal()!=-1) { 
-                elev_set_door_open_lamp(1);
-                timer(3);
-                elev_set_door_open_lamp(0);
-            }
-        }
-        elev_set_stop_lamp(0);
-
-        checkOutButtons()
-        printmatrix()
-        break;
+        checkOutButtons();
+        printmatrix();
+        
 
 
-        int n = 4;
+        //int n = 4;
 
-        driveToFloor(n);
+        //driveToFloor(n);
 
 
 	

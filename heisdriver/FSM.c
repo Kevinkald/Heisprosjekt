@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include "queue.h"
 
+#define N_BUTTONS 3
+#define N_FLOORS 4
+
 
 void timer(int N_Seconds) {
 
@@ -16,10 +19,24 @@ void timer(int N_Seconds) {
 	} while (seconds < N_Seconds);
 }
 
-void stopElevator(void) {
-	elev_set_motor_direction(DIRN_STOP);
-	elev_set_stop_lamp(1);
-	clearAll(); 	//function clears all orders
+void openDoor(void) {
+	elev_set_door_open_lamp(1);
+    timer(3);
+    elev_set_door_open_lamp(0);
+}
+
+
+void checkStopElevator(void) {
+
+	while (elev_get_stop_signal()){
+		elev_set_motor_direction(DIRN_STOP);
+		elev_set_stop_lamp(1);
+		clearAll(); 								//function clears all orders
+        if (elev_get_floor_sensor_signal()!=-1) { 
+            openDoor();
+        }
+    }
+    elev_set_stop_lamp(0);
 }
 
 
@@ -58,6 +75,10 @@ void checkOutButtons(){
         if (elev_get_button_signal(BUTTON_COMMAND, i)){
             setOrders(BUTTON_COMMAND, i);
         }
+
+    }
+    if (elev_get_button_signal(BUTTON_COMMAND, 3)){
+            setOrders(BUTTON_COMMAND, 3);
     }
 }
 
