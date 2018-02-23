@@ -8,15 +8,9 @@
 
 
 
-
-
-int direction_up[4] = { 0,0,0,0 };	//Denne legger en ener i 
-int direction_down[4] = { 0,0,0,0 };	//indeks 0-3 for etasje 1-4
-int ordered_floors[4] = { 0,0,0,0 };
-
 status state;
 
-void updateLists(){
+void updateLists(int direction_up[4], int direction_down[4], int ordered_floors[4]){
 	for(int i = 0; i < 3; i++){
 		if(elev_get_button_signal(BUTTON_CALL_UP, i) == 1){
 			direction_up[i] = 1;
@@ -31,18 +25,18 @@ void updateLists(){
 }
 
 
-status idle(){
+status idle(int direction_up[4], int direction_down[4], int ordered_floors[4]){
 	for(int i = 0; i < 3; i++){
 		if(elev_get_button_signal(BUTTON_CALL_UP, i) == 1){
-			updateLists();
+			updateLists(direction_up, direction_down, ordered_floors);
 			return UP; 
 		}
 		if(elev_get_button_signal(BUTTON_CALL_DOWN, i + 1) == 1){
-			updateLists();
+			updateLists(direction_up, direction_down, ordered_floors);
 			return DOWN;
 		}
 		if(elev_get_button_signal(BUTTON_COMMAND, i) == 1){
-			updateLists();
+			updateLists(direction_up, direction_down, ordered_floors);
 			return ERROR;
 		}
 	}

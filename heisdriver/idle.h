@@ -14,6 +14,6 @@ typedef enum elevStatus {
 } status;
 
 
-void updateLists(void);
-status idle(void);
+void updateLists(int direction_up[4], int direction_down[4], int ordered_floors[4]);
+status idle(int direction_up[4], int direction_down[4], ordered_floors[4]);
 
