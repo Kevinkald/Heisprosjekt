@@ -57,7 +57,6 @@ int elev_init(void) {
 	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
 		elev_set_motor_direction(DIRN_DOWN);
 		while (elev_get_floor_sensor_signal() == -1) {
-			printf("driving down\n");
 		}
 		elev_set_motor_direction(DIRN_UP); //effective stopping motor
 		elev_set_motor_direction(DIRN_STOP);
