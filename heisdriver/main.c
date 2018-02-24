@@ -11,7 +11,7 @@ int main() {
         return 1;
     }
 
-	printf("statrted program");
+	printf("started program");
 
 	while (1) {
 		
@@ -21,6 +21,8 @@ int main() {
         printmatrix();
         
         orderHandler();
+
+        updateFloorIndicator();
 
 
     }

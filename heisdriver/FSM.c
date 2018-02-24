@@ -112,3 +112,12 @@ void orderHandler(void) {
 	}
 
 }
+
+void updateFloorIndicator(void) {
+
+	int currentFloor = elev_get_floor_sensor_signal();
+
+	if (currentFloor != -1) {
+		elev_set_floor_indicator(currentFloor);
+	}
+}

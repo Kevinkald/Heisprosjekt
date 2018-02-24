@@ -12,5 +12,4 @@ void checkStopElevator(void);
 
 void orderHandler(void);
 
-
-
+void updateFloorIndicator(void);
