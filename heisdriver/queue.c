@@ -12,14 +12,8 @@ int matrixOrderList[3][4] = {
 	{ 0,0,0,0 },  //order list direction UP 1 - 3 floor
 	{ 0,0,0,0 },  //order list direction DOWN 2 - 3 floor
     { 0,0,0,0 }   //Request button 1 - 4 floor
-<<<<<<< HEAD
 };
 
-||||||| merged common ancestors
-
-=======
-};
->>>>>>> f302d77876d799a21ac55dc78152c03f59c06215
 
 
 
@@ -74,3 +68,23 @@ void printmatrix(){
 	printf("\n");
 }
 
+
+
+int ordersUp(int currentFloor) {
+	for (int i = currentFloor+1; i < 4; i++) {
+		if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+int ordersDown(int currentFloor) {
+	for (int i = currentFloor-1; i >= 0; i--) {
+		if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
+			return 1;
+		}
+	}
+	return 0;
+}

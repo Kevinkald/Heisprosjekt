@@ -9,12 +9,6 @@ void openDoor(void);
 
 void checkStopElevator(void);
 
-<<<<<<< HEAD
-void orderHandler(void);
-||||||| merged common ancestors
-=======
 void orderHandling(void);
-
->>>>>>> f302d77876d799a21ac55dc78152c03f59c06215
 
 void updateFloorIndicator(void);

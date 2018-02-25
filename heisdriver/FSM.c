@@ -42,6 +42,7 @@ state status = IDLE;
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
 	switch(status){
+
 		case IDLE:
 			for(int i = 0; i < 4; i++){
 				if(getOrder(BUTTON_CALL_UP, i) == 1){
@@ -56,6 +57,7 @@ void orderHandling(void){
 				}
 			}
 			break;
+
 		case DOWN:
 				printf("DOWN\n");
 				for (int i = currentFloor; i >= 0; i--) {
@@ -69,14 +71,14 @@ void orderHandling(void){
 
 						}	
 				}
+				if (!ordersDown(currentFloor)) {
+					status = IDLE;
+				}
 				break;
-				
-		
 
 		case UP:
 				printf("UP\n");
 				for (int i = currentFloor; i < 4; i++) {
-
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							elev_set_motor_direction(DIRN_UP);
 							if (elev_get_floor_sensor_signal() == i) {
@@ -84,18 +86,16 @@ void orderHandling(void){
 								clearOrder(BUTTON_CALL_UP, i);
 								clearOrder(BUTTON_COMMAND, i);
 							}
-
 						}	
+				}
+				if (!ordersUp(currentFloor)) {
+					status = DOWN;
 				}
 				break;
 	}
 }
 
-
-
-
 //checkout functions
-
 void checkStopElevator(void) {
 
 	while (elev_get_stop_signal()){
@@ -127,10 +127,6 @@ void checkOutButtons(void){
             setOrders(BUTTON_COMMAND, 3);
     }
 }
-
-
-
-
 
 int driveToFloor(int floor) {
 
@@ -172,40 +168,6 @@ void checkOutButtons(){
     if (elev_get_button_signal(BUTTON_COMMAND, 3)){
             setOrders(BUTTON_COMMAND, 3);
     }
-}
-
-
-void orderHandler(void) {
-
-	int currentFloor = elev_get_floor_sensor_signal();
-
-	for (int i = currentFloor; i < 4; i++) {
-
-			if (getOrder(BUTTON_CALL_UP,i) || getOrder(BUTTON_COMMAND,i)) {
-				elev_set_motor_direction(DIRN_UP);
-				if (elev_get_floor_sensor_signal()==i) {
-					openDoor();
-					clearOrder(BUTTON_CALL_UP,i);
-					clearOrder(BUTTON_COMMAND,i);
-				}
-
-			}	
-	}
-
-	/*for (int i = currentFloor; i >= 0; i--) {
-
-			if (getOrder(BUTTON_CALL_DOWN,i) || getOrder(BUTTON_COMMAND,i)) {
-				elev_set_motor_direction(DIRN_DOWN);
-				if (elev_get_floor_sensor_signal()==i) {
-					openDoor();
-					clearOrder(BUTTON_CALL_DOWN,i);
-					clearOrder(BUTTON_COMMAND,i);
-				}
-
-			}	
-	}
-	*/
-
 }
 
 void updateFloorIndicator(void) {
