@@ -60,7 +60,8 @@ void orderHandling(void){
 
 		case DOWN:
 				printf("DOWN\n");
-				for (int i = currentFloor; i >= 0; i--) {
+				if (currentFloor != -1) {
+					for (int i = currentFloor; i >= 0; i--) {
 						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
 							elev_set_motor_direction(DIRN_DOWN);
 							if (elev_get_floor_sensor_signal() == i) {
@@ -70,15 +71,17 @@ void orderHandling(void){
 							}
 
 						}	
-				}
-				if (!ordersDown(currentFloor)) {
-					status = IDLE;
+					}
+					if (!ordersDown(currentFloor)) {
+						status = IDLE;
+					}
 				}
 				break;
 
 		case UP:
 				printf("UP\n");
-				for (int i = currentFloor; i < 4; i++) {
+				if (currentFloor != -1) {
+					for (int i = currentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							elev_set_motor_direction(DIRN_UP);
 							if (elev_get_floor_sensor_signal() == i) {
@@ -87,9 +90,10 @@ void orderHandling(void){
 								clearOrder(BUTTON_COMMAND, i);
 							}
 						}	
-				}
-				if (!ordersUp(currentFloor)) {
-					status = DOWN;
+					}
+					if (!ordersUp(currentFloor)) {
+						status = DOWN;
+					}
 				}
 				break;
 	}
