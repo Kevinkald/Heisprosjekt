@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 
+
 int main() {
     // Initialize hardware
     if (!elev_init()) {
@@ -16,10 +17,11 @@ int main() {
 	while (1) {
 		
         checkStopElevator();
-
+        orderHandling();
         checkOutButtons();
         printmatrix();
         
+
         orderHandler();
 
         updateFloorIndicator();
