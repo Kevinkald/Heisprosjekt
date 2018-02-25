@@ -40,8 +40,8 @@ void openDoor(void) {
 state status = IDLE;
 
 void orderHandling(void){
-	int currentFloor = elev_get_floor_sensor_signal();
-	switch(status){
+	int currentFloor = elev_get_floor_sensor_signal(); //kan bli trøbbel her når currentFloo
+	switch(status){										// tar verdien -1
 
 		case IDLE:
 			for(int i = 0; i < 4; i++){
