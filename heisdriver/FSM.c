@@ -109,7 +109,6 @@ void checkStopElevator(void) {
     elev_set_stop_lamp(0);
 }
 
-
 void checkOutButtons(void){
     for(int i = 0; i < 3; i++){
         if (elev_get_button_signal(BUTTON_CALL_UP, i)){
@@ -132,48 +131,6 @@ void checkOutButtons(void){
     }
 }
 
-int driveToFloor(int floor) {
-
-	while (elev_get_floor_sensor_signal() != (floor-1)) {
-		if ((floor-1) > elev_get_floor_sensor_signal()) {
-			elev_set_motor_direction(DIRN_UP);
-		}
-
-		else if ((floor-1) < elev_get_floor_sensor_signal()) {
-			elev_set_motor_direction(DIRN_DOWN);
-		}
-
-		while ((floor-1) != elev_get_floor_sensor_signal()) {
-
-			printf("driving elevator towards floor\n");
-
-		}
-	}
-
-	elev_set_motor_direction(DIRN_STOP);
-
-	return 1;
-}
-
-
-void checkOutButtons(){
-    for(int i = 0; i < 3; i++){
-        if (elev_get_button_signal(BUTTON_CALL_UP, i)){
-            setOrders(BUTTON_CALL_UP, i);
-        }
-        if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
-            setOrders(BUTTON_CALL_DOWN, i + 1);
-        }
-        if (elev_get_button_signal(BUTTON_COMMAND, i)){
-            setOrders(BUTTON_COMMAND, i);
-        }
-
-    }
-    if (elev_get_button_signal(BUTTON_COMMAND, 3)){
-            setOrders(BUTTON_COMMAND, 3);
-    }
-}
-
 void updateFloorIndicator(void) {
 
 	int currentFloor = elev_get_floor_sensor_signal();
@@ -181,23 +138,4 @@ void updateFloorIndicator(void) {
 	if (currentFloor != -1) {
 		elev_set_floor_indicator(currentFloor);
 	}
-}
-
-
-void checkOutButtons(){
-    for(int i = 0; i < 3; i++){
-        if (elev_get_button_signal(BUTTON_CALL_UP, i)){
-            setOrders(BUTTON_CALL_UP, i);
-        }
-        if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
-            setOrders(BUTTON_CALL_DOWN, i + 1);
-        }
-        if (elev_get_button_signal(BUTTON_COMMAND, i)){
-            setOrders(BUTTON_COMMAND, i);
-        }
-
-    }
-    if (elev_get_button_signal(BUTTON_COMMAND, 3)){
-            setOrders(BUTTON_COMMAND, 3);
-    }
 }
