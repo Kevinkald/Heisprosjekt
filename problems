@@ -1,4 +1,10 @@
-1. Stop button opens door for 6 sek, skal være fikset nå.
-2. Down E4 og Up E1 funker ikke optimalt.
+1. Stop button opens door for 6 sek, SOLVED
+2. Down E4 og Up E1 funker ikke optimalt. Tror det skal være solved.
 	Logisk feil ved fjerning av Jans -1
-3. Når stopp knapp floor_sensor==-1 vil ikke heisen kjøre etterpå.
+3. Når stopp knapp floor_sensor==-1 vil ikke heisen kjøre etterpå. SOLVED
+
+NYE FEIL:
+
+4. Har en tendens til å holde dørene godt over 3 sek, [3,9] sek.
+5. Ved stresstest kan den stoppe helt og bli stuck når den har valget mellom 
+	enten opp eller ned.
