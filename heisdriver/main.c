@@ -12,21 +12,15 @@ int main() {
         return 1;
     }
 
-	printf("statrted program \n");
-	
+	printf("started program");
+
 	while (1) {
 		
-        checkStopElevator();
+        stopButton();
         orderHandling();
         checkOutButtons();
         printmatrix();
-        
-        
-
-
-        //int n = 4;
-
-        //driveToFloor(n);
+        updateFloorIndicator();
 
 
     }
