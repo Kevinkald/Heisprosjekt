@@ -92,16 +92,17 @@ void orderHandling(void){
 		case UP:
 				printf("UP\n");
 				//elev_set_motor_direction(DIRN_UP);
-				if(goToFloor != -1){
-					elev_set_motor_direction(DIRN_UP);
-					if(elev_get_floor_sensor_signal() == goToFloor){
-						openDoor();
-						clearOrder(BUTTON_COMMAND, goToFloor);
-						clearOrder(BUTTON_CALL_DOWN, goToFloor);
-						status = DOWN;
+				//if (currentFloor != -1) {
+					if(goToFloor != -1){
+						elev_set_motor_direction(DIRN_UP);
+						if(elev_get_floor_sensor_signal() == goToFloor){
+							openDoor();
+							clearOrder(BUTTON_COMMAND, goToFloor);
+							clearOrder(BUTTON_CALL_DOWN, goToFloor);
+							status = DOWN;
+						}
 					}
-				}
-				if (currentFloor != -1) {
+				
 					for (int i = currentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							elev_set_motor_direction(DIRN_UP);
@@ -117,7 +118,7 @@ void orderHandling(void){
 						status = IDLE;
 					}
 				
-				}
+				//}
 				break;
 
 		case DOWN:
@@ -133,7 +134,7 @@ void orderHandling(void){
 						status = UP;
 					}
 				}
-				if (currentFloor != -1) {
+				//if (currentFloor != -1) {
 					for (int i = currentFloor; i >= 0; i--) {
 						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
 							elev_set_motor_direction(DIRN_DOWN);
@@ -149,7 +150,7 @@ void orderHandling(void){
 					if (!ordersDown(currentFloor)) {
 						status = IDLE;
 					}
-				}
+				//}
 
 				break;
 		
