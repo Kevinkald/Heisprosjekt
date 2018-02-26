@@ -25,6 +25,7 @@ void timer(int N_Seconds) {
 
 	do {
 		checkOutButtons();
+		checkStopElevator();
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
 	} while (seconds < N_Seconds);
@@ -46,7 +47,7 @@ void orderHandling(void){
 
 		case IDLE:
 			for(int i = 0; i < 4; i++){
-				if(getOrder(BUTTON_CALL_UP, i) == 1){
+				if(getOrder(BUTTON_CALL_UP, i)){
 					if (currentFloor>i) {
 						status = DOWN;
 					}
@@ -56,7 +57,7 @@ void orderHandling(void){
 					}
 					break;
 				}
-				else if(getOrder(BUTTON_CALL_DOWN, i) == 1){
+				else if(getOrder(BUTTON_CALL_DOWN, i)){
 					printf("button call down \n");
 					status = DOWN;
 					break;
