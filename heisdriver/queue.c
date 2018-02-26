@@ -50,7 +50,7 @@ void clearAll(){
 
 void printmatrix(){
 	for(int i = 0; i < 3; i++){
-		for (int j = 0; j < 4; j++){
+		for(int j = 0; j < 4; j++){
 			printf("%d" , matrixOrderList[i][j]);
 		}
 		printf("\n");
