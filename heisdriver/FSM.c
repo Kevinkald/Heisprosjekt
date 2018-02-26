@@ -24,6 +24,7 @@ void timer(int N_Seconds) {
 	int seconds = 0;
 
 	do {
+		checkOutButtons();
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
 	} while (seconds < N_Seconds);
@@ -46,37 +47,31 @@ void orderHandling(void){
 		case IDLE:
 			for(int i = 0; i < 4; i++){
 				if(getOrder(BUTTON_CALL_UP, i) == 1){
-					printf("button call up \n");
-					status = UP;
+					if (currentFloor>i) {
+						status = DOWN;
+					}
+					else {
+						printf("button call up \n");
+						status = UP;
+					}
 					break;
 				}
-				if(getOrder(BUTTON_CALL_DOWN, i) == 1){
+				else if(getOrder(BUTTON_CALL_DOWN, i) == 1){
 					printf("button call down \n");
 					status = DOWN;
 					break;
 				}
-			}
-			break;
-
-		case DOWN:
-				printf("DOWN\n");
-				if (currentFloor != -1) {
-					for (int i = currentFloor; i >= 0; i--) {
-						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
-							elev_set_motor_direction(DIRN_DOWN);
-							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(BUTTON_CALL_UP, i);
-								clearOrder(BUTTON_COMMAND, i);
-							}
-
-						}	
+				else if (getOrder(BUTTON_COMMAND, i)) {
+					printf("Button command\n" );
+					if (currentFloor>i) {
+						status = DOWN;
 					}
-					if (!ordersDown(currentFloor)) {
-						status = IDLE;
+					else {
+						status = UP;
 					}
 				}
-				break;
+			}
+			break;
 
 		case UP:
 				printf("UP\n");
@@ -88,14 +83,40 @@ void orderHandling(void){
 								openDoor();
 								clearOrder(BUTTON_CALL_UP, i);
 								clearOrder(BUTTON_COMMAND, i);
+								clearOrder(BUTTON_CALL_DOWN,i);
 							}
 						}	
 					}
 					if (!ordersUp(currentFloor)) {
 						status = DOWN;
 					}
+				
 				}
 				break;
+
+		case DOWN:
+				printf("DOWN\n");
+				
+				if (currentFloor != -1) {
+					for (int i = currentFloor; i >= 0; i--) {
+						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
+							elev_set_motor_direction(DIRN_DOWN);
+							if (elev_get_floor_sensor_signal() == i) {
+								openDoor();
+								clearOrder(BUTTON_CALL_DOWN, i);
+								clearOrder(BUTTON_COMMAND, i);
+								clearOrder(BUTTON_CALL_UP, i);
+							}
+
+						}	
+					}
+					if (!ordersDown(currentFloor)) {
+						status = IDLE;
+					}
+				}
+
+				break;
+		
 	}
 }
 
@@ -117,21 +138,21 @@ void checkOutButtons(void){
     for(int i = 0; i < 3; i++){
         if (elev_get_button_signal(BUTTON_CALL_UP, i)){
             setOrders(BUTTON_CALL_UP, i);
-            elev_set_button_lamp(BUTTON_CALL_UP, i, getOrder(BUTTON_CALL_UP, i));
+            //elev_set_button_lamp(BUTTON_CALL_UP, i, getOrder(BUTTON_CALL_UP, i));
         }
         if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
             setOrders(BUTTON_CALL_DOWN, i + 1);
-            elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, getOrder(BUTTON_CALL_DOWN, i + 1));
+            //elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, getOrder(BUTTON_CALL_DOWN, i + 1));
         }
         if (elev_get_button_signal(BUTTON_COMMAND, i)){
             setOrders(BUTTON_COMMAND, i);
-            elev_set_button_lamp(BUTTON_COMMAND, i, getOrder(BUTTON_COMMAND, i));
+            //elev_set_button_lamp(BUTTON_COMMAND, i, getOrder(BUTTON_COMMAND, i));
         }
 
     }
     if (elev_get_button_signal(BUTTON_COMMAND, 3)){
             setOrders(BUTTON_COMMAND, 3);
-            elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
+            //elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
     }
 }
 

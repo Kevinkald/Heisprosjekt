@@ -20,10 +20,6 @@ int main() {
         orderHandling();
         checkOutButtons();
         printmatrix();
-        
-
-        orderHandler();
-
         updateFloorIndicator();
 
 
