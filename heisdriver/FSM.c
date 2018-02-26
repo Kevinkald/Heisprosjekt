@@ -16,8 +16,6 @@ typedef enum tag_elev_direction {
     UP = 1
 } state;
 
-
-
 void timer(int N_Seconds) {
 
 	clock_t before = clock();
@@ -25,7 +23,7 @@ void timer(int N_Seconds) {
 
 	do {
 		checkOutButtons();
-		checkStopElevator();
+		stopButton();
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
 	} while (seconds < N_Seconds);
@@ -39,6 +37,25 @@ void openDoor(void) {
     elev_set_door_open_lamp(0);
 }
 
+void stopButton(void) {
+
+	int stopped = 0;
+	while (elev_get_stop_signal()){
+		elev_set_motor_direction(DIRN_STOP);
+		elev_set_stop_lamp(1);
+		clearAll();	
+		stopped = 1;
+    }
+    if ((currentFloor != -1) && (stopped)) {
+    	openDoor();
+    	status = IDLE;
+    }
+    else if (stopped) {
+    	status = IDLE;
+    }
+    elev_set_stop_lamp(0);
+}
+
 state status = IDLE;
 int goToFloor;
 
@@ -48,8 +65,6 @@ void orderHandling(void){
 		case IDLE:
 			for(int i = 0; i < 4; i++){
 				if(getOrder(BUTTON_CALL_UP, i)){
-					if (currentFloor>i) {
-				if(getOrder(BUTTON_CALL_UP, i) == 1){
 					printf("button call up \n");
 					goToFloor = i;
 					if(currentFloor > goToFloor){
@@ -157,20 +172,6 @@ void orderHandling(void){
 				break;
 		
 	}
-}
-
-//checkout functions
-void checkStopElevator(void) {
-
-	while (elev_get_stop_signal()){
-		elev_set_motor_direction(DIRN_STOP);
-		elev_set_stop_lamp(1);
-		clearAll();	
-	}							//function clears all orders
-    if (elev_get_floor_sensor_signal()!=-1) { 
-            openDoor();
-    }
-    elev_set_stop_lamp(0);
 }
 
 void checkOutButtons(void){

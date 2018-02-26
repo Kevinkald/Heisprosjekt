@@ -6,7 +6,7 @@ void checkOutButtons(void);
 
 void openDoor(void);
 
-void checkStopElevator(void);
+void stopButton(void);
 
 void orderHandling(void);
 
