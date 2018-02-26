@@ -25,6 +25,7 @@ void timer(int N_Seconds) {
 
 	do {
 		checkOutButtons();
+		checkStopElevator();
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
 	} while (seconds < N_Seconds);
@@ -109,6 +110,7 @@ void orderHandling(void){
 					if(elev_get_floor_sensor_signal() == goToFloor){
 						openDoor();
 						clearOrder(BUTTON_COMMAND, goToFloor);
+						clearOrder(BUTTON_CALL_DOWN, goToFloor);
 						clearOrder(BUTTON_CALL_UP, goToFloor);
 						status = UP;
 					}
@@ -153,24 +155,28 @@ void checkStopElevator(void) {
 void checkOutButtons(void){
     for(int i = 0; i < 3; i++){
         if (elev_get_button_signal(BUTTON_CALL_UP, i)){
-            setOrders(BUTTON_CALL_UP, i);
-            //elev_set_button_lamp(BUTTON_CALL_UP, i, getOrder(BUTTON_CALL_UP, i));
+            setOrders(BUTTON_CALL_UP, i);            
         }
+        
         if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
-            setOrders(BUTTON_CALL_DOWN, i + 1);
-            //elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, getOrder(BUTTON_CALL_DOWN, i + 1));
+            setOrders(BUTTON_CALL_DOWN, i + 1);            
         }
+        
         if (elev_get_button_signal(BUTTON_COMMAND, i)){
-            setOrders(BUTTON_COMMAND, i);
-            //elev_set_button_lamp(BUTTON_COMMAND, i, getOrder(BUTTON_COMMAND, i));
+            setOrders(BUTTON_COMMAND, i);            
         }
-
+        
+        elev_set_button_lamp(BUTTON_CALL_UP, i, getOrder(BUTTON_CALL_UP, i));
+    	elev_set_button_lamp(BUTTON_COMMAND, i, getOrder(BUTTON_COMMAND, i));
+    	elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, getOrder(BUTTON_CALL_DOWN, i + 1));
     }
     if (elev_get_button_signal(BUTTON_COMMAND, 3)){
             setOrders(BUTTON_COMMAND, 3);
-            //elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
     }
+    
+   	elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
 }
+
 
 void updateFloorIndicator(void) {
 
