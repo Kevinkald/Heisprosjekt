@@ -165,9 +165,10 @@ void checkStopElevator(void) {
 		elev_set_stop_lamp(1);
 		clearAll(); 
 		status = IDLE;								//function clears all orders
-        if (elev_get_floor_sensor_signal()!=-1) { 
+        
+    }
+    if (elev_get_floor_sensor_signal()!=-1) { 
             openDoor();
-        }
     }
     elev_set_stop_lamp(0);
 }
