@@ -42,7 +42,6 @@ void openDoor(void) {
 state status = IDLE;
 int goToFloor;
 
-
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
 	switch(status){
@@ -59,7 +58,7 @@ void orderHandling(void){
 					status = UP;
 					break;
 				}
-				if(getOrder(BUTTON_CALL_DOWN, i) == 1){
+				else if(getOrder(BUTTON_CALL_DOWN, i) == 1){
 					printf("button call down \n");
 					goToFloor = i;
 					if(currentFloor < goToFloor){
@@ -70,11 +69,29 @@ void orderHandling(void){
 					status = DOWN;
 					break;
 				}
+				else {
+					if (getOrder(BUTTON_COMMAND, i)) {
+						printf("button command\n");
+						goToFloor = i;
+						if(currentFloor < goToFloor){
+							printf("pressed command go UP\n");
+							status = UP;
+							break;
+						}	
+						if(currentFloor > goToFloor){
+							status = DOWN;
+							break;
+						}
+
+
+					}
+				}
 			}
 		break;
 
 		case UP:
 				printf("UP\n");
+				//elev_set_motor_direction(DIRN_UP);
 				if(goToFloor != -1){
 					elev_set_motor_direction(DIRN_UP);
 					if(elev_get_floor_sensor_signal() == goToFloor){
@@ -105,6 +122,7 @@ void orderHandling(void){
 
 		case DOWN:
 				printf("DOWN\n");
+				//elev_set_motor_direction(DIRN_DOWN);
 				if(goToFloor != -1){
 					elev_set_motor_direction(DIRN_DOWN);
 					if(elev_get_floor_sensor_signal() == goToFloor){
@@ -144,7 +162,8 @@ void checkStopElevator(void) {
 	while (elev_get_stop_signal()){
 		elev_set_motor_direction(DIRN_STOP);
 		elev_set_stop_lamp(1);
-		clearAll(); 								//function clears all orders
+		clearAll(); 
+		status = IDLE;								//function clears all orders
         if (elev_get_floor_sensor_signal()!=-1) { 
             openDoor();
         }
