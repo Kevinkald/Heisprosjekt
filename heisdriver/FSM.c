@@ -127,10 +127,10 @@ void checkStopElevator(void) {
 	while (elev_get_stop_signal()){
 		elev_set_motor_direction(DIRN_STOP);
 		elev_set_stop_lamp(1);
-		clearAll(); 								//function clears all orders
-        if (elev_get_floor_sensor_signal()!=-1) { 
+		clearAll();								//function clears all orders
+    }
+    if (elev_get_floor_sensor_signal()!=-1) { 
             openDoor();
-        }
     }
     elev_set_stop_lamp(0);
 }
