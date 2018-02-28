@@ -16,6 +16,9 @@ typedef enum tag_elev_direction {
     UP = 1
 } state;
 
+state status = IDLE;
+int goToFloor;
+
 void timer(int N_Seconds) {
 
 	clock_t before = clock();
@@ -37,18 +40,16 @@ void openDoor(void) {
     elev_set_door_open_lamp(0);
 }
 
-state status = IDLE;
-int goToFloor;
-
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
-	if (stopButton() && (currentFloor != -1)) {
+	/*if (stopButton() && (currentFloor != -1)) {
 		openDoor();
 		status = IDLE;
 	}
 	else if (stopButton()) {
 		status = IDLE;
 	}
+	*/
 	switch(status){
 		case IDLE:
 			elev_set_motor_direction(DIRN_STOP);
@@ -181,7 +182,7 @@ int stopButton(void) {
     else if (stopped) {
     	status = IDLE;
     }
-   
+    
     elev_set_stop_lamp(0);
     return stopped;
 }
