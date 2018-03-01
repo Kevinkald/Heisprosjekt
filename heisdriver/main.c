@@ -18,9 +18,10 @@ int main() {
 		
         stopButton();
         orderHandling();
+        updateFloorIndicator();
         checkOutButtons();
         printmatrix();
-        updateFloorIndicator();
+        
 
 
     }
