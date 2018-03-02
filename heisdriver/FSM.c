@@ -100,10 +100,11 @@ void orderHandling(void){
 						}
 					}	
 				}
-				else {
+
+				else if (!ordersAboveFloor) {
 					status = IDLE;
 				}
-
+				
 				break;
 
 
@@ -133,7 +134,7 @@ void orderHandling(void){
 							status = IDLE;
 					}
 				}
-				break;		
+				break;			
 	}
 }
 
