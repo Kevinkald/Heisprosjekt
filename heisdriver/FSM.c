@@ -19,6 +19,7 @@ typedef enum tag_elev_direction {
 
 state status = IDLE;
 int goToFloor = -1;
+int recentFloor;
 
 
 //timer function
@@ -39,6 +40,9 @@ void timer(int N_Seconds) {
 //Finite-state-machine
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
+	if (currentFloor!=-1) {
+		recentFloor = currentFloor;
+	}
 	switch(status){
 		case IDLE:
 				printf("IDLE\n");
@@ -46,7 +50,7 @@ void orderHandling(void){
 				for(int i = 0; i < 4; i++){
 					if(getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)){
 						goToFloor = i;
-						if(currentFloor > goToFloor){
+						if(recentFloor > goToFloor){
 							status = DOWN;
 							break;
 						}
@@ -55,7 +59,7 @@ void orderHandling(void){
 					}
 					else if(getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)){
 						goToFloor = i;
-						if(currentFloor < goToFloor){
+						if(recentFloor < goToFloor){
 							status = UP;
 							break;
 						}
@@ -73,7 +77,6 @@ void orderHandling(void){
 				if(currentFloor != -1) {
 					if(goToFloor != -1){
 						if(elev_get_floor_sensor_signal() == goToFloor){
-							printf("case up")
 							openDoor();
 							clearOrder(BUTTON_COMMAND, goToFloor);
 							clearOrder(BUTTON_CALL_DOWN, goToFloor);
