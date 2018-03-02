@@ -171,7 +171,7 @@ int stopButton(void) {
 	int stopped = 0;
 
 	if (elev_get_stop_signal()) {
-		clearALL();
+		clearAll();
 	}
 	
 	while (elev_get_stop_signal()){
