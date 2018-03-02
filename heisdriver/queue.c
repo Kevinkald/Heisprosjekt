@@ -27,16 +27,11 @@ int getOrder(elev_button_type_t orderButton, int floor ){
 	return matrixOrderList[(int)orderButton][floor];
 }
 
-void clearOrder(elev_button_type_t orderButton, int floor){
-	if ((int)orderButton == 0){
-		matrixOrderList[0][floor] = 0;
-	}
-	if ((int)orderButton == 1){
-		matrixOrderList[1][floor] = 0;
-	}
-	if ((int)orderButton == 2){
-		matrixOrderList[2][floor] = 0;
-	}
+void clearOrder(int floor){
+	matrixOrderList[0][floor] = 0;
+	matrixOrderList[1][floor] = 0;
+	matrixOrderList[2][floor] = 0;
+	
 
 }//this function should just clear a specific floor.
 

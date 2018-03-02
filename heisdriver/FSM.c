@@ -47,25 +47,23 @@ void orderHandling(void){
 		case IDLE:
 				printf("IDLE\n");
 				elev_set_motor_direction(DIRN_STOP);
-				for(int i = 0; i < 4; i++){
-					if(getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)){
-						goToFloor = i;
+				if(ordersUp(recentFloor)){
+						/*goToFloor = i;
 						if(recentFloor > goToFloor){
 							status = DOWN;
 							break;
-						}
+						}*/
 						status = UP;
 						break;
-					}
-					else if(getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)){
-						goToFloor = i;
+				}
+				else if(ordersDown(recentFloor)){
+						/*goToFloor = i;
 						if(recentFloor < goToFloor){
 							status = UP;
 							break;
-						}
+						}*/
 						status = DOWN;
 						break;
-					}
 				}
 				break;
 				
@@ -78,9 +76,7 @@ void orderHandling(void){
 					if(goToFloor != -1){
 						if(elev_get_floor_sensor_signal() == goToFloor){
 							openDoor();
-							clearOrder(BUTTON_COMMAND, goToFloor);
-							clearOrder(BUTTON_CALL_DOWN, goToFloor);
-							clearOrder(BUTTON_CALL_UP, goToFloor);
+							clearOrder(goToFloor);
 							goToFloor = -1;
 							status = DOWN;
 						}
@@ -90,9 +86,7 @@ void orderHandling(void){
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
-								clearOrder(BUTTON_CALL_DOWN, i);
-								clearOrder(BUTTON_CALL_UP, i);
-								clearOrder(BUTTON_COMMAND, i);
+								clearOrder(i);
 							}
 						}	
 					}
@@ -110,9 +104,7 @@ void orderHandling(void){
 					if(goToFloor != -1){
 						if(elev_get_floor_sensor_signal() == goToFloor){
 							openDoor();
-							clearOrder(BUTTON_COMMAND, goToFloor);
-							clearOrder(BUTTON_CALL_DOWN, goToFloor);
-							clearOrder(BUTTON_CALL_UP, goToFloor);
+							clearOrder(goToFloor);
 							goToFloor = -1;
 							status = UP;
 						}
@@ -122,9 +114,7 @@ void orderHandling(void){
 						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
-								clearOrder(BUTTON_CALL_DOWN, i);
-								clearOrder(BUTTON_COMMAND, i);
-								clearOrder(BUTTON_CALL_UP, i);
+								clearOrder(i);
 							}
 						}	
 					}
@@ -140,7 +130,6 @@ void orderHandling(void){
 //checkout functions
 void openDoor(void) {
 	elev_set_motor_direction(DIRN_STOP);
-	//printf("open door\n");
 	elev_set_door_open_lamp(1);
     timer(3);
     elev_set_door_open_lamp(0);
