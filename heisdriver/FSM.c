@@ -88,7 +88,7 @@ void orderHandling(void){
 					Explaination of these if sentences: 
 				
 				First if checks if there are no up/command orders above recent floor by 
-				checking that k = 0, if so ordersDownAboveFloor checks if there are any
+				checking that ordersAboveFloor = 0, if so ordersDownAboveFloor checks if there are any
 				orders-down above recent floor. If so if stops at these floors before 
 				changing to state IDLE where direction is changed to down if there are
 				orders under recent floor.
