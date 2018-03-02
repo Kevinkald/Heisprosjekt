@@ -18,6 +18,7 @@ typedef enum tag_elev_direction {
 
 state status = IDLE;
 int goToFloor;
+int recentFloor;
 
 void timer(int N_Seconds) {
 
@@ -42,6 +43,9 @@ void openDoor(void) {
 
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
+	if (currentFloor!=-1) {
+		recentFloor = currentFloor;
+	}
 	switch(status){
 		case IDLE:
 				printf("IDLE\n");
@@ -49,7 +53,7 @@ void orderHandling(void){
 				for(int i = 0; i < 4; i++){
 					if(getOrder(BUTTON_CALL_UP, i)){
 						goToFloor = i;
-						if(currentFloor > goToFloor){
+						if(recentFloor > goToFloor){
 							status = DOWN;
 							break;
 						}
@@ -58,7 +62,7 @@ void orderHandling(void){
 					}
 					else if(getOrder(BUTTON_CALL_DOWN, i)){
 						goToFloor = i;
-						if(currentFloor < goToFloor){
+						if(recentFloor < goToFloor){
 							status = UP;
 							break;
 						}
@@ -68,11 +72,11 @@ void orderHandling(void){
 					else {
 						if (getOrder(BUTTON_COMMAND, i)) {
 							goToFloor = i;
-							if(currentFloor < goToFloor){
+							if(recentFloor < goToFloor){
 								status = UP;
 								break;
 							}	
-							if(currentFloor > goToFloor){
+							if(recentFloor > goToFloor){
 								status = DOWN;
 								break;
 							}
@@ -159,27 +163,28 @@ int stopButton(void) {
 		clearAll();	
 		checkOutButtons();
 		stopped = 1;
-		status = IDLE;
     }
-    if ((elev_get_floor_sensor_signal() != -1) && (stopped)) {
+
+    int current_floor = elev_get_floor_sensor_signal();
+    if ((current_floor != -1) && (stopped)) {
     	openDoor();
     	status = IDLE;
     }
     else if (stopped) {
-
-    	if (ordersDown(elev_get_floor_sensor_signal()) && (status == DOWN)) {
-    		status = DOWN;
-    	}
-    	else if (ordersUp(elev_get_floor_sensor_signal()) && (status == UP)) {
+    	/*if ((ordersUp(recentFloor)) && (status == UP)) {
     		status = UP;
     	}
-    	else if (ordersDown(elev_get_floor_sensor_signal())) {
+    	else if ((ordersDown(recentFloor)) && (status == DOWN)) {
     		status = DOWN;
     	}
-    	else if (ordersUp(elev_get_floor_sensor_signal())) {
+    	else if (ordersUp(recentFloor)) {
     		status = UP;
     	}
-    }
+    	else if (ordersDown(recentFloor)) {
+    		status = DOWN;
+    	}
+    */	status = IDLE;
+   	}
     
     elev_set_stop_lamp(0);
     return stopped;
