@@ -182,7 +182,7 @@ int stopButton(void) {
     }
     else if (stopped) {
 
-    	if (ordersDown()) {
+    	if (ordersDown(elev_get_floor_sensor_signal())) {
     		status = DOWN;
     	}
     	else {
