@@ -62,19 +62,15 @@ void orderHandling(void){
 						status = DOWN;
 						break;
 					}
-					/*else 
-						if (getOrder(BUTTON_COMMAND, i)) {
-							goToFloor = i;
-							if(currentFloor < goToFloor){
-								status = UP;
-								break;
-							}	
-							if(currentFloor > goToFloor){
-								status = DOWN;
-								break;
-							}
-
-
+					/*else if(getOrder(BUTTON_COMMAND, i)){ 
+						goToFloor = i;
+						if(currentFloor < goToFloor){
+							status = UP;
+							break;
+						}	
+						if(currentFloor > goToFloor){
+							status = DOWN;
+							break;
 						}
 					}*/
 				}
