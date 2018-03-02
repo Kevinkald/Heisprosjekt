@@ -169,11 +169,15 @@ void orderHandling(void){
 int stopButton(void) {
 
 	int stopped = 0;
+
+	if (elev_get_stop_signal()) {
+		clearALL();
+	}
+	
 	while (elev_get_stop_signal()){
 		elev_set_motor_direction(DIRN_STOP);
 		elev_set_stop_lamp(1);
 		clearAll();	
-		printf("holding stop button\n");
 		stopped = 1;
     }
     if ((elev_get_floor_sensor_signal() != -1) && (stopped)) {
@@ -182,10 +186,16 @@ int stopButton(void) {
     }
     else if (stopped) {
 
-    	if (ordersDown()) {
+    	if (ordersDown(elev_get_floor_sensor_signal()) && (status == DOWN)) {
     		status = DOWN;
     	}
-    	else {
+    	else if (ordersUp(elev_get_floor_sensor_signal()) && (status == UP)) {
+    		status = UP;
+    	}
+    	else if (ordersDown(elev_get_floor_sensor_signal())) {
+    		status = DOWN;
+    	}
+    	else if (ordersUp(elev_get_floor_sensor_signal())) {
     		status = UP;
     	}
     }
