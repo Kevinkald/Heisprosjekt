@@ -44,51 +44,108 @@ void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
 	switch(status){
 		case IDLE:
-			for(int i = 0; i < 4; i++){
-				if(getOrder(BUTTON_CALL_UP, i) == 1){
-					printf("button call up \n");
-					status = UP;
-					break;
-				}
-				if(getOrder(BUTTON_CALL_DOWN, i) == 1){
-					printf("button call down \n");
-					status = DOWN;
-					break;
-				}
-			}
-			break;
-		case DOWN:
-				printf("DOWN\n");
-				for (int i = currentFloor; i >= 0; i--) {
-						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
-							elev_set_motor_direction(DIRN_DOWN);
-							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(BUTTON_CALL_UP, i);
-								clearOrder(BUTTON_COMMAND, i);
+				printf("IDLE\n");
+				elev_set_motor_direction(DIRN_STOP);
+				for(int i = 0; i < 4; i++){
+					if(getOrder(BUTTON_CALL_UP, i)){
+						goToFloor = i;
+						if(currentFloor > goToFloor){
+							status = DOWN;
+							break;
+						}
+						status = UP;
+						break;
+					}
+					else if(getOrder(BUTTON_CALL_DOWN, i)){
+						goToFloor = i;
+						if(currentFloor < goToFloor){
+							status = UP;
+							break;
+						}
+						status = DOWN;
+						break;
+					}
+					else {
+						if (getOrder(BUTTON_COMMAND, i)) {
+							goToFloor = i;
+							if(currentFloor < goToFloor){
+								status = UP;
+								break;
+							}	
+							if(currentFloor > goToFloor){
+								status = DOWN;
+								break;
 							}
 
-						}	
+
+						}
+					}
 				}
 				break;
-				
-		
 
 		case UP:
 				printf("UP\n");
-				for (int i = currentFloor; i < 4; i++) {
-
+				elev_set_motor_direction(DIRN_UP);
+				updateFloorIndicator();
+				if(currentFloor != -1) {
+					if(goToFloor != -1){
+						if(elev_get_floor_sensor_signal() == goToFloor){
+							openDoor();
+							clearOrder(BUTTON_COMMAND, goToFloor);
+							clearOrder(BUTTON_CALL_DOWN, goToFloor);
+							clearOrder(BUTTON_CALL_UP, goToFloor);
+							goToFloor = -1;
+							status = DOWN;
+						}
+					}
+				
+					for (int i = currentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
-							elev_set_motor_direction(DIRN_UP);
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
+								clearOrder(BUTTON_CALL_DOWN, i);
 								clearOrder(BUTTON_CALL_UP, i);
 								clearOrder(BUTTON_COMMAND, i);
 							}
-
 						}	
+					}
+					if (!ordersUp(currentFloor)) {
+						status = IDLE;
+					}
 				}
 				break;
+
+		case DOWN:
+				printf("DOWN\n");
+				elev_set_motor_direction(DIRN_DOWN);
+				updateFloorIndicator();
+				if (currentFloor != -1) {
+					if(goToFloor != -1){
+						if(elev_get_floor_sensor_signal() == goToFloor){
+							openDoor();
+							clearOrder(BUTTON_COMMAND, goToFloor);
+							clearOrder(BUTTON_CALL_DOWN, goToFloor);
+							clearOrder(BUTTON_CALL_UP, goToFloor);
+							goToFloor = -1;
+							status = UP;
+						}
+					}
+					
+					for (int i = currentFloor; i >= 0; i--) {
+						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
+							if (elev_get_floor_sensor_signal() == i) {
+								openDoor();
+								clearOrder(BUTTON_CALL_DOWN, i);
+								clearOrder(BUTTON_COMMAND, i);
+								clearOrder(BUTTON_CALL_UP, i);
+							}
+						}	
+					}
+					if (!ordersDown(currentFloor)) {
+							status = IDLE;
+					}
+				}
+				break;		
 	}
 }
 
