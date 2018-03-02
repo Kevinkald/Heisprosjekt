@@ -1,9 +1,9 @@
 Bugs:
 	1. Når stopp knapp er trykket så slukker ikke alle lys.
 	
-	2. ??? Heis vil ALLTID gå opp når heisen er mellom to etasjer (stopp knapp har først blit trykket) selv
+	2. Heis vil ALLTID gå opp når heisen er mellom to etasjer (stopp knapp har først blit trykket) selv
 	om man vil ned.
 	
-	3. ???Problemer med logikk: hvis 2 etg. ned er trykket, så trykkes 1 etg. opp, så trykkes
+	3. Problemer med logikk: hvis 2 etg. ned er trykket, så trykkes 1 etg. opp, så trykkes
 	request 4. Hvor skal den gå??? (den går opp). 
 	
