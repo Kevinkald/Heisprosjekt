@@ -41,111 +41,99 @@ void openDoor(void) {
     elev_set_door_open_lamp(0);
 }
 
+//Finite-state-machine
 void orderHandling(void){
 	int currentFloor = elev_get_floor_sensor_signal();
+
 	if (currentFloor!=-1) {
 		recentFloor = currentFloor;
 	}
+
 	switch(status){
 		case IDLE:
 				printf("IDLE\n");
 				elev_set_motor_direction(DIRN_STOP);
-				for(int i = 0; i < 4; i++){
-					if(getOrder(BUTTON_CALL_UP, i)){
-						goToFloor = i;
-						if(recentFloor > goToFloor){
-							status = DOWN;
-							break;
-						}
+
+				if(ordersUp(recentFloor)){
 						status = UP;
 						break;
-					}
-					else if(getOrder(BUTTON_CALL_DOWN, i)){
-						goToFloor = i;
-						if(recentFloor < goToFloor){
-							status = UP;
-							break;
-						}
+				}
+				else if(ordersDown(recentFloor)){
 						status = DOWN;
 						break;
-					}
-					else {
-						if (getOrder(BUTTON_COMMAND, i)) {
-							goToFloor = i;
-							if(recentFloor < goToFloor){
-								status = UP;
-								break;
-							}	
-							if(recentFloor > goToFloor){
-								status = DOWN;
-								break;
-							}
-
-
-						}
-					}
 				}
 				break;
+				
 
 		case UP:
 				printf("UP\n");
 				elev_set_motor_direction(DIRN_UP);
-				updateFloorIndicator();
-				if((currentFloor) != -1) {
-					if(goToFloor != -1){
-						if(elev_get_floor_sensor_signal() == goToFloor){
+				updateFloorIndicator();  			//Hvorfor updateFloor.. her Jan?
+				int ordersAboveFloor = 0;
+
+				/*This for loop just checks for orders UP/COMMAND from recent visited floor,
+				no exiting news here*/
+				for (int i = recentFloor; i < 4; i++) {								
+					if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
+						if (currentFloor == i) {
 							openDoor();
-							clearOrder(BUTTON_COMMAND, goToFloor);
-							clearOrder(BUTTON_CALL_DOWN, goToFloor);
-							clearOrder(BUTTON_CALL_UP, goToFloor);
-							goToFloor = -1;
-							status = DOWN;
+							clearOrder(i);
 						}
-					}
-				
-					for (int i = recentFloor; i < 4; i++) {
-						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(BUTTON_CALL_DOWN, i);
-								clearOrder(BUTTON_CALL_UP, i);
-								clearOrder(BUTTON_COMMAND, i);
-							}
-						}	
-					}
-					if (!ordersUp(recentFloor)) {
-						status = IDLE;
-					}
+						ordersAboveFloor = 1;
+					}	
 				}
+
+				/*ordersDownAboveFloor returns 1 if there are orders-down
+				above recent floor.
+
+					Explaination of these if sentences: 
+				
+				First if checks if there are no up/command orders above recent floor by 
+				checking that k = 0, if so ordersDownAboveFloor checks if there are any
+				orders-down above recent floor. If so if stops at these floors before 
+				changing to state IDLE where direction is changed to down if there are
+				orders under recent floor.
+				*/ 
+				if (ordersDownAboveFloor(recentFloor) && (!ordersAboveFloor)) {
+					for (int i = recentFloor; i < 4; i++) {
+						if (getOrder(BUTTON_CALL_DOWN, i)) {
+							if (currentFloor == i) {
+								openDoor();
+								clearOrder(i);
+							}
+						}
+					}	
+				}
+				else {
+					status = IDLE;
+				}
+
 				break;
+
 
 		case DOWN:
 				printf("DOWN\n");
 				elev_set_motor_direction(DIRN_DOWN);
-				updateFloorIndicator();
-				if (recentFloor != -1) {
+				updateFloorIndicator();					//hvorfor denne her?
+				if (currentFloor != -1) {
 					if(goToFloor != -1){
 						if(elev_get_floor_sensor_signal() == goToFloor){
 							openDoor();
-							clearOrder(BUTTON_COMMAND, goToFloor);
-							clearOrder(BUTTON_CALL_DOWN, goToFloor);
-							clearOrder(BUTTON_CALL_UP, goToFloor);
+							clearOrder(goToFloor);
 							goToFloor = -1;
 							status = UP;
 						}
 					}
 					
-					for (int i = recentFloor; i >= 0; i--) {
+					for (int i = currentFloor; i >= 0; i--) {
 						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
-								clearOrder(BUTTON_CALL_DOWN, i);
-								clearOrder(BUTTON_COMMAND, i);
-								clearOrder(BUTTON_CALL_UP, i);
+								clearOrder(i);
 							}
 						}	
 					}
-					if (!ordersDown(recentFloor)) {
+					if (!ordersDown(currentFloor)) {
 							status = IDLE;
 					}
 				}
