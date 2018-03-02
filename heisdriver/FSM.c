@@ -62,17 +62,6 @@ void orderHandling(void){
 						status = DOWN;
 						break;
 					}
-					/*else if(getOrder(BUTTON_COMMAND, i)){ 
-						goToFloor = i;
-						if(currentFloor < goToFloor){
-							status = UP;
-							break;
-						}	
-						if(currentFloor > goToFloor){
-							status = DOWN;
-							break;
-						}
-					}*/
 				}
 				break;
 				
@@ -84,6 +73,7 @@ void orderHandling(void){
 				if(currentFloor != -1) {
 					if(goToFloor != -1){
 						if(elev_get_floor_sensor_signal() == goToFloor){
+							printf("case up")
 							openDoor();
 							clearOrder(BUTTON_COMMAND, goToFloor);
 							clearOrder(BUTTON_CALL_DOWN, goToFloor);
@@ -92,7 +82,7 @@ void orderHandling(void){
 							status = DOWN;
 						}
 					}
-				
+					
 					for (int i = currentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
