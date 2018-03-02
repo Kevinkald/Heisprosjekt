@@ -155,6 +155,7 @@ int stopButton(void) {
 		elev_set_motor_direction(DIRN_STOP);
 		elev_set_stop_lamp(1);
 		clearAll();	
+		checkOutButtons();
 		stopped = 1;
     }
     if ((elev_get_floor_sensor_signal() != -1) && (stopped)) {
