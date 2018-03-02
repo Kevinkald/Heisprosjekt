@@ -44,7 +44,7 @@ void orderHandling(void){
 				printf("IDLE\n");
 				elev_set_motor_direction(DIRN_STOP);
 				for(int i = 0; i < 4; i++){
-					if(getOrder(BUTTON_CALL_UP, i)){
+					if(getOrder(BUTTON_CALL_UP, i) || (getOrder(BUTTON_COMMAND, i) && currentFloor < goToFloor)){
 						goToFloor = i;
 						if(currentFloor > goToFloor){
 							status = DOWN;
@@ -53,7 +53,7 @@ void orderHandling(void){
 						status = UP;
 						break;
 					}
-					else if(getOrder(BUTTON_CALL_DOWN, i)){
+					else if(getOrder(BUTTON_CALL_DOWN, i) || (getOrder(BUTTON_COMMAND, i) && currentFloor < goToFloor)){
 						goToFloor = i;
 						if(currentFloor < goToFloor){
 							status = UP;
@@ -62,7 +62,7 @@ void orderHandling(void){
 						status = DOWN;
 						break;
 					}
-					else {
+					/*else {
 						if (getOrder(BUTTON_COMMAND, i)) {
 							goToFloor = i;
 							if(currentFloor < goToFloor){
@@ -75,10 +75,11 @@ void orderHandling(void){
 							}
 
 
-						}
+						}*/
 					}
-				}
 				break;
+				}
+				
 
 		case UP:
 				printf("UP\n");
