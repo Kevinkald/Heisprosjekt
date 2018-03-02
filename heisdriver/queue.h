@@ -21,3 +21,8 @@ int ordersDown(int currentFloor);
   Returns 1 if there are down-orders above current defined floor. 
 */
 int ordersDownAboveFloor(int currentFloor);
+
+/**
+  Returns 1 if there are up-orders under current defined floor. 
+*/
+int ordersUpUnderFloor(int currentFloor);

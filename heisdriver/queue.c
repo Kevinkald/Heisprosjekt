@@ -79,3 +79,12 @@ int ordersDownAboveFloor(int currentFloor) {
 	}
 	return 0;
 }
+
+int ordersUpUnderFloor(int currentFloor) {
+	for (int i = currentFloor-1; i >= 0; i--) {
+		if (getOrder(BUTTON_CALL_UP, i)) {
+			return 1;
+		}
+	}
+	return 0;
+}

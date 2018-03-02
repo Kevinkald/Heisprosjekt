@@ -70,6 +70,7 @@ void orderHandling(void){
 				elev_set_motor_direction(DIRN_UP);
 				updateFloorIndicator();  			//Hvorfor updateFloor.. her Jan?
 				int ordersAboveFloor = 0;
+				int ordersUnderFloor = 0;
 
 				/*This for loop just checks for orders UP/COMMAND from recent visited floor,
 				no exiting news here*/
@@ -114,28 +115,32 @@ void orderHandling(void){
 				printf("DOWN\n");
 				elev_set_motor_direction(DIRN_DOWN);
 				updateFloorIndicator();					//hvorfor denne her?
-				if (currentFloor != -1) {
-					if(goToFloor != -1){
-						if(elev_get_floor_sensor_signal() == goToFloor){
+				
+				for (int i = currentFloor; i >= 0; i--) {
+					if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
+						if (currentFloor == i) {
 							openDoor();
-							clearOrder(goToFloor);
-							goToFloor = -1;
-							status = UP;
+							clearOrder(i);							
 						}
 					}
-					
-					for (int i = currentFloor; i >= 0; i--) {
-						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
+					ordersUnderFloor = 1;	
+				}
+				
+				if (ordersUpUnderFloor(recentFloor) && (!ordersUnderFloor)) {
+					for (int i = recentFloor; i >= 0; i--) {
+						if (getOrder(BUTTON_CALL_UP, i)) {
+							if (currentFloor == i) {
 								openDoor();
 								clearOrder(i);
 							}
-						}	
-					}
-					if (!ordersDown(currentFloor)) {
-							status = IDLE;
-					}
+						}
+					}	
 				}
+
+				else if (!ordersUnderFloor){
+					status = IDLE;
+				}
+
 				break;		
 	}
 }
@@ -158,21 +163,9 @@ int stopButton(void) {
     	status = IDLE;
     }
     else if (stopped) {
-    	/*if ((ordersUp(recentFloor)) && (status == UP)) {
-    		status = UP;
-    	}
-    	else if ((ordersDown(recentFloor)) && (status == DOWN)) {
-    		status = DOWN;
-    	}
-    	else if (ordersUp(recentFloor)) {
-    		status = UP;
-    	}
-    	else if (ordersDown(recentFloor)) {
-    		status = DOWN;
-    	}
-    */	status = IDLE;
+		status = IDLE;
    	}
-    
+   	
     elev_set_stop_lamp(0);
     return stopped;
 }
