@@ -93,7 +93,7 @@ void orderHandling(void){
 				changing to state IDLE where direction is changed to down if there are
 				orders under recent floor.
 				*/ 
-				if (ordersDownAboveFloor(recentFloor) && (!ordersAboveFloor)) {
+				if ((ordersDownAboveFloor(recentFloor)) && (!ordersAboveFloor)) {
 					for (int i = recentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_DOWN, i)) {
 							if (currentFloor == i) {
@@ -122,8 +122,9 @@ void orderHandling(void){
 							openDoor();
 							clearOrder(i);							
 						}
+						ordersUnderFloor = 1;
 					}
-					ordersUnderFloor = 1;	
+						
 				}
 				
 				if (ordersUpUnderFloor(recentFloor) && (!ordersUnderFloor)) {

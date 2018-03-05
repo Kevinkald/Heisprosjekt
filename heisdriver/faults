@@ -1,0 +1,11 @@
+when going down to serve Floor 1 buttons the elevator goes to the floor, but cant open door and stop elevator as it should, same on the top. I can observe that this only happens when there ar no other orders than either floor 4 down or floor 1 up.
+
+when on its way down the elevator stops at at floors that wants to go up.
+
+looks like the down state is wrong, 
+
+when elevator goes up it acts as it should.
+
+when going down it stops at floors wanting to go up.
+
+also when going down to floors wanting to go down the elevator makes noice and goes between IDLE and DOWN.
