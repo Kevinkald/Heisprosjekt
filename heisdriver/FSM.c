@@ -106,8 +106,8 @@ void orderHandling(void){
 
 //checkout functions
 void openDoor(void) {
-	elev_set_motor_direction(DIRN_STOP);
-	elev_set_door_open_lamp(1);
+    elev_set_motor_direction(DIRN_STOP);
+    elev_set_door_open_lamp(1);
     timer(3);
     elev_set_door_open_lamp(0);
 }
@@ -115,14 +115,14 @@ void openDoor(void) {
 
 int stopButton(void) {
 
-	int stopped = 0;
+    int stopped = 0;
 
-	while (elev_get_stop_signal()){
-		elev_set_motor_direction(DIRN_STOP);
-		elev_set_stop_lamp(1);
-		clearAll();	
-		checkOutButtons();
-		stopped = 1;
+    while (elev_get_stop_signal()){
+        elev_set_motor_direction(DIRN_STOP);
+        elev_set_stop_lamp(1);
+        clearAll();	
+        checkOutButtons();
+        stopped = 1;
     }
 
     int current_floor = elev_get_floor_sensor_signal();
@@ -161,8 +161,8 @@ void checkOutButtons(void){
     if (elev_get_button_signal(BUTTON_COMMAND, 3)){
             setOrders(BUTTON_COMMAND, 3);
     }
-    
-   	elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
+
+    elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
 }
 
 
