@@ -20,8 +20,6 @@ typedef enum tag_elev_direction {
 state status = IDLE;
 int recentFloor;
 int direction;
-//int stopped = 0;
-
 
 
 //timer function
@@ -49,7 +47,7 @@ void orderHandling(void){
 		case IDLE:
 				printf("IDLE\n");
 				elev_set_motor_direction(DIRN_STOP);
-				
+				printf("recentFloor: %d\n", recentFloor);
 				if(ordersUp(recentFloor)){
 						printf("check1\n");
 						status = UP;
@@ -69,7 +67,7 @@ void orderHandling(void){
 				elev_set_motor_direction(DIRN_UP);
 				updateFloorIndicator();
 				if(currentFloor != -1) {
-					for (int i = currentFloor; i < 4; i++) {
+					for (int i = recentFloor; i < 4; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
@@ -89,7 +87,7 @@ void orderHandling(void){
 				elev_set_motor_direction(DIRN_DOWN);
 				updateFloorIndicator();
 				if (currentFloor != -1) {
-					for (int i = currentFloor; i >= 0; i--) {
+					for (int i = recentFloor; i >= 0; i--) {
 						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
@@ -112,14 +110,13 @@ void openDoor(void) {
 	elev_set_door_open_lamp(1);
     timer(3);
     elev_set_door_open_lamp(0);
-    printf("open door\n");
-
 }
 
 
 int stopButton(void) {
+
 	int stopped = 0;
-	
+
 	while (elev_get_stop_signal()){
 		elev_set_motor_direction(DIRN_STOP);
 		elev_set_stop_lamp(1);
