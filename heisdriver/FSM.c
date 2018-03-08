@@ -19,7 +19,7 @@ typedef enum tag_elev_direction {
 
 state status = IDLE;
 int recentFloor;
-int direction;
+int direction = 0;
 
 
 //timer function
@@ -48,13 +48,14 @@ void orderHandling(void){
 				printf("IDLE\n");
 				elev_set_motor_direction(DIRN_STOP);
 				printf("recentFloor: %d\n", recentFloor);
-				if(ordersUp(recentFloor)){
-						printf("check1\n");
+				printf("currentFloor: %d\n", currentFloor);
+				if(ordersUp(recentFloor) || (direction == -1 && (getOrder(BUTTON_CALL_UP, recentFloor) || getOrder(BUTTON_CALL_DOWN, recentFloor)))){
+						
 						status = UP;
 						break;
 				}
-				else if(ordersDown(recentFloor)){
-						printf("check2\n");
+				else if(ordersDown(recentFloor) || (direction == 1 && (getOrder(BUTTON_CALL_UP, recentFloor) || getOrder(BUTTON_CALL_DOWN, recentFloor)))){
+						
 						status = DOWN;
 						break;
 				}
@@ -131,9 +132,8 @@ int stopButton(void) {
     	status = IDLE;
     }
     else if (stopped) {
-		status = IDLE;
+       status = IDLE;
    	}
-   	
     elev_set_stop_lamp(0);
     return stopped;
 }
