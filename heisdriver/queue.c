@@ -54,7 +54,7 @@ void printmatrix(){
 }
 
 int ordersUp(int currentFloor) {
-	for (int i = currentFloor+1; i < 4; i++) {
+	for (int i = currentFloor + 1; i < 4; i++) {
 		if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i) || getOrder(BUTTON_CALL_DOWN, i)) {
 			return 1;
 		}
@@ -63,7 +63,7 @@ int ordersUp(int currentFloor) {
 }
 
 int ordersDown(int currentFloor) {
-	for (int i = currentFloor-1; i >= 0; i--) {
+	for (int i = currentFloor - 1; i >= 0; i--) {
 		if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i) || getOrder(BUTTON_CALL_UP, i)) {
 			return 1;
 		}
