@@ -4,14 +4,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int matrixOrderList[3][4] = {
+
+int matrixOrderList[N_BUTTONS][N_FLOORS] = {
 	{ 0,0,0,0 },  //order list direction UP 1 - 3 floor
 	{ 0,0,0,0 },  //order list direction DOWN 2 - 3 floor
     { 0,0,0,0 }   //Request button 1 - 4 floor
 };
 
 void setOrders(elev_button_type_t orderButton, int floor){
-	for(int i = 0; i < 3; i++){
+	for(int i = 0; i < N_BUTTONS; i++){
 		for(int j = 0; j < 4; j++){
 			if((int)orderButton == i){
 				if(floor == j){
@@ -31,21 +32,19 @@ void clearOrder(int floor){
 	matrixOrderList[0][floor] = 0;
 	matrixOrderList[1][floor] = 0;
 	matrixOrderList[2][floor] = 0;
-	
-
-}//this function should just clear a specific floor.
+}
 
 void clearAll(){
-	for(int i = 0; i < 3; i++){
-		for(int j = 0; j < 4; j++){
+	for(int i = 0; i < N_BUTTONS; i++){
+		for(int j = 0; j < N_FLOORS; j++){
 			matrixOrderList[i][j] = 0;
 		}
 	}
 }
 
 void printmatrix(){
-	for(int i = 0; i < 3; i++){
-		for(int j = 0; j < 4; j++){
+	for(int i = 0; i < N_BUTTONS; i++){
+		for(int j = 0; j < N_FLOORS; j++){
 			printf("%d" , matrixOrderList[i][j]);
 		}
 		printf("\n");
@@ -54,7 +53,7 @@ void printmatrix(){
 }
 
 int ordersUp(int currentFloor) {
-	for (int i = currentFloor + 1; i < 4; i++) {
+	for (int i = currentFloor + 1; i < N_FLOORS; i++) {
 		if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i) || getOrder(BUTTON_CALL_DOWN, i)) {
 			return 1;
 		}

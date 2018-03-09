@@ -5,11 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-#define N_BUTTONS 3
-#define N_FLOORS 4
-
-
 //variable declaration
 typedef enum tag_elev_direction { 
     IDLE = -1,
@@ -68,7 +63,7 @@ void orderHandling(void){
 				elev_set_motor_direction(DIRN_UP);
 				updateFloorIndicator();
 				if(currentFloor != -1) {
-					for (int i = recentFloor; i < 4; i++) {
+					for (int i = recentFloor; i < N_FLOORS; i++) {
 						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								openDoor();
@@ -76,7 +71,7 @@ void orderHandling(void){
 							}
 						}	
 					}
-					if (!ordersUp(currentFloor)) {
+					if (!ordersUp(currentFloor)) { //recentfloor her?
 						status = IDLE;
 					}
 				}
@@ -96,7 +91,7 @@ void orderHandling(void){
 							}
 						}	
 					}
-					if (!ordersDown(currentFloor)) {
+					if (!ordersDown(currentFloor)) { //recentfloor her?
 							status = IDLE;
 					}
 				}
@@ -140,7 +135,7 @@ int stopButton(void) {
 
 
 void checkOutButtons(void){
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < N_BUTTONS; i++){
         if (elev_get_button_signal(BUTTON_CALL_UP, i)){
             setOrders(BUTTON_CALL_UP, i);            
         }
@@ -172,103 +167,3 @@ void updateFloorIndicator(void) {
 		elev_set_floor_indicator(currentFloor);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*void orderHandling(void){
-	int currentFloor = elev_get_floor_sensor_signal();
-	if (currentFloor!=-1) {
-		recentFloor = currentFloor;
-	}
-	switch(status){
-		case IDLE:
-				printf("IDLE\n");
-				elev_set_motor_direction(DIRN_STOP);
-				if(ordersUp(recentFloor)){
-						goToFloor = i;
-						if(recentFloor > goToFloor){
-							status = DOWN;
-							break;
-						}
-						status = UP;
-						break;
-				}
-				else if(ordersDown(recentFloor)){
-						goToFloor = i;
-						if(recentFloor < goToFloor){
-							status = UP;
-							break;
-						}
-						status = DOWN;
-						break;
-				}
-				break;
-				
-
-		case UP:
-				printf("UP\n");
-				elev_set_motor_direction(DIRN_UP);
-				updateFloorIndicator();
-				if(currentFloor != -1) {
-					if(goToFloor != -1){
-						if(elev_get_floor_sensor_signal() == goToFloor){
-							openDoor();
-							clearOrder(goToFloor);
-							goToFloor = -1;
-							status = DOWN;
-						}
-					}
-					
-					for (int i = currentFloor; i < 4; i++) {
-						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(i);
-							}
-						}	
-					}
-					if (!ordersUp(currentFloor)) {
-						status = IDLE;
-					}
-				}
-				break;
-
-		case DOWN:
-				printf("DOWN\n");
-				elev_set_motor_direction(DIRN_DOWN);
-				updateFloorIndicator();
-				if (currentFloor != -1) {
-					if(goToFloor != -1){
-						if(elev_get_floor_sensor_signal() == goToFloor){
-							openDoor();
-							clearOrder(goToFloor);
-							goToFloor = -1;
-							status = UP;
-						}
-					}
-					
-					for (int i = currentFloor; i >= 0; i--) {
-						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(i);
-							}
-						}	
-					}
-					if (!ordersDown(currentFloor)) {
-							status = IDLE;
-					}
-				}
-				break;		
-	}
-}
-*/

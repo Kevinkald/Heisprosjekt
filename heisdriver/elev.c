@@ -53,12 +53,12 @@ int elev_init(void) {
     elev_set_door_open_lamp(0);
     elev_set_floor_indicator(0);
 
-	//making sure that elevator starts in defined floor
-	if (elev_get_floor_sensor_signal() == -1) { //-1 not defined floor
+	// Drives elevator to defined floor and stops.
+	if (elev_get_floor_sensor_signal() == -1) {
 		elev_set_motor_direction(DIRN_DOWN);
 		while (elev_get_floor_sensor_signal() == -1) {
 		}
-		elev_set_motor_direction(DIRN_UP); //effective stopping motor
+		elev_set_motor_direction(DIRN_UP);
 		elev_set_motor_direction(DIRN_STOP);
 	}
 
@@ -154,5 +154,3 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);
 }
-
-
