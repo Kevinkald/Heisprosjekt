@@ -25,14 +25,14 @@ void check_stop_button(void);
 
 
 /**
-  Checks the order matrix for a specific order.
+  Handles the transitions between the states IDLE, UP and DOWN
+  by handling the order matrix.
 */
-void orderHandling(void);
+void elevator_controller(void);
 
 
 
 /**
-  Checks the order matrix for a specific order.
-  @return 1 if the button is requested at the given floor, 0 otherwise.
+  Updates the floor indicator when a new floor is visited.
 */
 void update_floor_indicator(void);

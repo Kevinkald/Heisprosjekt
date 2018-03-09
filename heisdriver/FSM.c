@@ -20,7 +20,7 @@ int direction = 0;
 
 
 //Finite-state-machine
-void orderHandling(void){
+void elevator_controller(void){
 
 	int current_floor = elev_get_floor_sensor_signal();
 

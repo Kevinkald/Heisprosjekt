@@ -17,9 +17,9 @@ int main() {
 	while (1) {
 		
         check_stop_button();
-        orderHandling();
-        updateFloorIndicator();
-        checkOutButtons();
+        elevator_controller();
+        update_floor_indicator();
+        check_buttons();
         print_order_matrix();
       
     }
