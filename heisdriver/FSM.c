@@ -1,7 +1,8 @@
 #include "FSM.h"
 #include "elev.h"
 #include "queue.h"
-#include <time.h>
+#include "timer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,20 +17,6 @@ typedef enum tag_elev_direction {
 state status = IDLE;
 int recent_floor;
 int direction = 0;
-
-
-void timer_delay_sec(int n_sec) {
-
-	clock_t before = clock();
-	int seconds = 0;
-
-	do {
-		check_buttons();
-		check_stop_button();
-		clock_t difference = clock() - before;
-		seconds = difference / CLOCKS_PER_SEC;
-	} while (seconds < n_sec);
-}
 
 
 //Finite-state-machine
@@ -116,7 +103,7 @@ void check_stop_button(void) {
     while (elev_get_stop_signal()){
         elev_set_motor_direction(DIRN_STOP);
         elev_set_stop_lamp(1);
-        clearAll();	
+        clear_all();	
         check_buttons();
         stopped = 1;
     }
