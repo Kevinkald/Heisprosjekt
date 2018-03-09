@@ -16,14 +16,12 @@ int main() {
 
 	while (1) {
 		
-        stopButton();
+        check_stop_button();
         orderHandling();
         updateFloorIndicator();
         checkOutButtons();
-        printmatrix();
-        
-
-
+        print_order_matrix();
+      
     }
     return 0;
 }

@@ -1,69 +1,72 @@
 #include "queue.h"
 #include "channels.h"
 #include "io.h"
+#include "elev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
 
-int matrixOrderList[N_BUTTONS][N_FLOORS] = {
-	{ 0,0,0,0 },  //order list direction UP 1 - 3 floor
-	{ 0,0,0,0 },  //order list direction DOWN 2 - 3 floor
-    { 0,0,0,0 }   //Request button 1 - 4 floor
+// Orders up in first row, orders down second row, commands third row.
+int order_matrix[N_BUTTONS][N_FLOORS] = {
+	{ 0,0,0,0 },  
+	{ 0,0,0,0 },  
+    { 0,0,0,0 }   
 };
 
-void setOrders(elev_button_type_t orderButton, int floor){
+void set_order(elev_button_type_t button_type, int floor){
 	for(int i = 0; i < N_BUTTONS; i++){
 		for(int j = 0; j < 4; j++){
-			if((int)orderButton == i){
+			if((int)button_type == i){
 				if(floor == j){
-					matrixOrderList[i][j] = 1;
+					order_matrix[i][j] = 1;
 				}
 			}
 		}
 	}
 }
 
-int getOrder(elev_button_type_t orderButton, int floor ){
+int get_order(elev_button_type_t button_type, int floor){
 
-	return matrixOrderList[(int)orderButton][floor];
+	return order_matrix[(int)button_type][floor];
 }
 
-void clearOrder(int floor){
-	matrixOrderList[0][floor] = 0;
-	matrixOrderList[1][floor] = 0;
-	matrixOrderList[2][floor] = 0;
+void clear_order(int floor){
+	order_matrix[0][floor] = 0;
+	order_matrix[1][floor] = 0;
+	order_matrix[2][floor] = 0;
 }
 
-void clearAll(){
+void clear_all(){
 	for(int i = 0; i < N_BUTTONS; i++){
 		for(int j = 0; j < N_FLOORS; j++){
-			matrixOrderList[i][j] = 0;
+			order_matrix[i][j] = 0;
 		}
 	}
 }
 
-void printmatrix(){
+void print_order_matrix(){
 	for(int i = 0; i < N_BUTTONS; i++){
 		for(int j = 0; j < N_FLOORS; j++){
-			printf("%d" , matrixOrderList[i][j]);
+			printf("%d" , order_matrix[i][j]);
 		}
 		printf("\n");
 	}
 	printf("\n");
 }
 
-int ordersUp(int currentFloor) {
-	for (int i = currentFloor + 1; i < N_FLOORS; i++) {
-		if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i) || getOrder(BUTTON_CALL_DOWN, i)) {
+int orders_up(int recent_floor) {
+	for (int i = recent_floor + 1; i < N_FLOORS; i++) {
+		if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i) || get_order(BUTTON_CALL_DOWN, i)) {
 			return 1;
 		}
 	}
 	return 0;
 }
 
-int ordersDown(int currentFloor) {
-	for (int i = currentFloor - 1; i >= 0; i--) {
-		if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i) || getOrder(BUTTON_CALL_UP, i)) {
+int orders_down(int recent_floor) {
+	for (int i = recent_floor - 1; i >= 0; i--) {
+		if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i) || get_order(BUTTON_CALL_UP, i)) {
 			return 1;
 		}
 	}

@@ -1,5 +1,4 @@
 #pragma once
-#include "elev.h"
 
 #define N_BUTTONS 3
 #define N_FLOORS 4
@@ -7,55 +6,51 @@
 
 
 /**
-  Initialize elevator.
-  @return Non-zero on success, 0 on failure.
+  Sets an order for the given button and floor in the order matrix.
 */
-void setOrders(elev_button_type_t orderButton, int floor);
+void set_order(elev_button_type_t button_type, int floor);
 
 
 
 /**
-  Initialize elevator.
-  @return Non-zero on success, 0 on failure.
+  Checks the order matrix for a specific order.
+  @return 1 if the button is requested at the given floor, 0 otherwise.
 */
-int getOrder(elev_button_type_t orderButton, int floor );
+int get_order(elev_button_type_t button_type, int floor);
 
 
 
 /**
-  Initialize elevator.
-  @return Non-zero on success, 0 on failure.
+  Clears orders for a specific floor.
 */
-void clearOrder(int floor);
+void clear_order(int floor);
 
 
 
 /**
-  Clears all orders.
-  @return Non-zero on success, 0 on failure.
+  Clears all orders from order matrix.
 */
-void clearAll(void);
+void clear_all(void);
 
 
 
 /**
-  Initialize elevator.
-  @return Non-zero on success, 0 on failure.
+  Prints the order matrix.
 */
-void printmatrix(void);
+void print_order_matrix(void);
 
 
 
 /**
   Checks if there are orders above recent floor.
-  @return Non-zero on success, 0 on failure.
+  @return 1 if there are orders above recent visited floor, 0 otherwise.
 */
-int ordersUp(int currentFloor);
+int orders_up(int recent_floor);
 
 
 
 /**
   Checks if there are orders under recent floor.
-  @return Non-zero on success, 0 on failure.
+  @returns 1 if there are orders under recent visited floor, 0 otherwise.
 */
-int ordersDown(int currentFloor);
+int orders_down(int recent_floor);

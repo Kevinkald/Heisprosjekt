@@ -5,51 +5,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//variable declaration
+//The values of the three different states
 typedef enum tag_elev_direction { 
     IDLE = -1,
     DOWN = 0,    
     UP = 1
 } state;
 
+//Initializing variables
 state status = IDLE;
-int recentFloor;
+int recent_floor;
 int direction = 0;
 
 
-//timer function
-void timer(int N_Seconds) {
+void timer_delay_sec(int n_sec) {
 
 	clock_t before = clock();
 	int seconds = 0;
 
 	do {
-		checkOutButtons();
-		stopButton();
+		check_buttons();
+		check_stop_button();
 		clock_t difference = clock() - before;
 		seconds = difference / CLOCKS_PER_SEC;
-	} while (seconds < N_Seconds);
+	} while (seconds < n_sec);
 }
 
 
 //Finite-state-machine
 void orderHandling(void){
-	int currentFloor = elev_get_floor_sensor_signal();
-	if (currentFloor!=-1) {
-		recentFloor = currentFloor;
+
+	int current_floor = elev_get_floor_sensor_signal();
+
+	if (current_floor!=-1) {
+		recent_floor = current_floor;
 	}
+
 	switch(status){
 		case IDLE:
-				printf("IDLE\n");
+				printf("Current state: < IDLE > \n");
 				elev_set_motor_direction(DIRN_STOP);
-				printf("recentFloor: %d\n", recentFloor);
-				printf("currentFloor: %d\n", currentFloor);
-				if(ordersUp(recentFloor) || (direction == -1 && (getOrder(BUTTON_CALL_UP, recentFloor) || getOrder(BUTTON_CALL_DOWN, recentFloor)))){
+
+				if(orders_up(recent_floor) || (direction == -1 && (get_order(BUTTON_CALL_UP, recent_floor) || get_order(BUTTON_CALL_DOWN, recent_floor)))){
 						
 						status = UP;
 						break;
 				}
-				else if(ordersDown(recentFloor) || (direction == 1 && (getOrder(BUTTON_CALL_UP, recentFloor) || getOrder(BUTTON_CALL_DOWN, recentFloor)))){
+				else if(orders_down(recent_floor) || (direction == 1 && (get_order(BUTTON_CALL_UP, recent_floor) || get_order(BUTTON_CALL_DOWN, recent_floor)))){
 						
 						status = DOWN;
 						break;
@@ -58,20 +60,21 @@ void orderHandling(void){
 				
 
 		case UP:
-				printf("UP\n");
+				printf("Current state: < UP > \n");
 				direction = DIRN_UP;
 				elev_set_motor_direction(DIRN_UP);
-				updateFloorIndicator();
-				if(currentFloor != -1) {
-					for (int i = recentFloor; i < N_FLOORS; i++) {
-						if (getOrder(BUTTON_CALL_UP, i) || getOrder(BUTTON_COMMAND, i)) {
+				update_floor_indicator();
+
+				if(current_floor != -1) {
+					for (int i = recent_floor; i < N_FLOORS; i++) {
+						if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(i);
+								open_door();
+								clear_order(i);
 							}
 						}	
 					}
-					if (!ordersUp(currentFloor)) { //recentfloor her?
+					if (!orders_up(current_floor)) { //recent_floor her?
 						status = IDLE;
 					}
 				}
@@ -81,17 +84,17 @@ void orderHandling(void){
 				printf("DOWN\n");
 				direction = DIRN_DOWN;
 				elev_set_motor_direction(DIRN_DOWN);
-				updateFloorIndicator();
-				if (currentFloor != -1) {
-					for (int i = recentFloor; i >= 0; i--) {
-						if (getOrder(BUTTON_CALL_DOWN, i) || getOrder(BUTTON_COMMAND, i)) {
+				update_floor_indicator();
+				if (current_floor != -1) {
+					for (int i = recent_floor; i >= 0; i--) {
+						if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
-								openDoor();
-								clearOrder(i);
+								open_door();
+								clear_order(i);
 							}
 						}	
 					}
-					if (!ordersDown(currentFloor)) { //recentfloor her?
+					if (!orders_down(current_floor)) { //recent_floor her?
 							status = IDLE;
 					}
 				}
@@ -99,17 +102,14 @@ void orderHandling(void){
 	}
 }
 
-
-//checkout functions
-void openDoor(void) {
+void open_door(void) {
     elev_set_motor_direction(DIRN_STOP);
     elev_set_door_open_lamp(1);
-    timer(3);
+    timer_delay_sec(3);
     elev_set_door_open_lamp(0);
 }
 
-
-int stopButton(void) {
+void check_stop_button(void) {
 
     int stopped = 0;
 
@@ -117,53 +117,54 @@ int stopButton(void) {
         elev_set_motor_direction(DIRN_STOP);
         elev_set_stop_lamp(1);
         clearAll();	
-        checkOutButtons();
+        check_buttons();
         stopped = 1;
     }
 
     int current_floor = elev_get_floor_sensor_signal();
+
     if ((current_floor != -1) && (stopped)) {
-    	openDoor();
+    	open_door();
     	status = IDLE;
     }
     else if (stopped) {
        status = IDLE;
    	}
+
     elev_set_stop_lamp(0);
-    return stopped;
 }
 
 
-void checkOutButtons(void){
+void check_buttons(void){
     for(int i = 0; i < N_BUTTONS; i++){
         if (elev_get_button_signal(BUTTON_CALL_UP, i)){
-            setOrders(BUTTON_CALL_UP, i);            
+            set_order(BUTTON_CALL_UP, i);            
         }
         
         if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
-            setOrders(BUTTON_CALL_DOWN, i + 1);            
+            set_order(BUTTON_CALL_DOWN, i + 1);            
         }
         
         if (elev_get_button_signal(BUTTON_COMMAND, i)){
-            setOrders(BUTTON_COMMAND, i);            
+            set_order(BUTTON_COMMAND, i);            
         }
         
-        elev_set_button_lamp(BUTTON_CALL_UP, i, getOrder(BUTTON_CALL_UP, i));
-    	elev_set_button_lamp(BUTTON_COMMAND, i, getOrder(BUTTON_COMMAND, i));
-    	elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, getOrder(BUTTON_CALL_DOWN, i + 1));
+        elev_set_button_lamp(BUTTON_CALL_UP, i, get_order(BUTTON_CALL_UP, i));
+    	elev_set_button_lamp(BUTTON_COMMAND, i, get_order(BUTTON_COMMAND, i));
+    	elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, get_order(BUTTON_CALL_DOWN, i + 1));
     }
     
     if (elev_get_button_signal(BUTTON_COMMAND, 3)){
-            setOrders(BUTTON_COMMAND, 3);
+            set_order(BUTTON_COMMAND, 3);
     }
 
-    elev_set_button_lamp(BUTTON_COMMAND, 3, getOrder(BUTTON_COMMAND, 3));
+    elev_set_button_lamp(BUTTON_COMMAND, 3, get_order(BUTTON_COMMAND, 3));
 }
 
 
-void updateFloorIndicator(void) {
-	int currentFloor = elev_get_floor_sensor_signal();
-	if (currentFloor != -1) {
-		elev_set_floor_indicator(currentFloor);
+void update_floor_indicator(void) {
+	int current_floor = elev_get_floor_sensor_signal();
+	if (current_floor != -1) {
+		elev_set_floor_indicator(current_floor);
 	}
 }

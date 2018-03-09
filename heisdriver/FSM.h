@@ -1,13 +1,48 @@
-void timer(int N_Seconds);
+#pragma once
 
-//Checks if buttons are pressed and updates order matrix in queue.c
-//also updates the button lights.
-void checkOutButtons(void);
 
-void openDoor(void);
 
-int stopButton(void);
+/**
+  Delays the elevator for n_sec seconds.
+*/
+void timer_delay_sec(int n_sec);
 
+
+
+/**
+  Checks 
+  @return 1 if the button is requested at the given floor, 0 otherwise.
+*/
+void check_buttons(void);
+
+
+
+/**
+  Checks the order matrix for a specific order.
+  @return 1 if the button is requested at the given floor, 0 otherwise.
+*/
+void open_door(void);
+
+
+
+/**
+  Checks the order matrix for a specific order.
+  @return 1 if the button is requested at the given floor, 0 otherwise.
+*/
+void check_stop_button(void);
+
+
+
+/**
+  Checks the order matrix for a specific order.
+  @return 1 if the button is requested at the given floor, 0 otherwise.
+*/
 void orderHandling(void);
 
-void updateFloorIndicator(void);
+
+
+/**
+  Checks the order matrix for a specific order.
+  @return 1 if the button is requested at the given floor, 0 otherwise.
+*/
+void update_floor_indicator(void);
