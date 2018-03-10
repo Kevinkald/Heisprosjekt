@@ -1,7 +1,6 @@
 #include "queue.h"
 #include "elev.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 
 
@@ -12,10 +11,10 @@ int order_matrix[N_BUTTONS][N_FLOORS] = {
     { 0,0,0,0 }   
 };
 
-void set_order(elev_button_type_t button_type, int floor){
+void set_order(elev_button_type_t button, int floor){
 	for (int i = 0; i < N_BUTTONS; i++){
 		for (int j = 0; j < N_FLOORS; j++){
-			if (button_type == i){
+			if (button == i){
 				if (floor == j){
 					order_matrix[i][j] = 1;
 				}
@@ -24,8 +23,8 @@ void set_order(elev_button_type_t button_type, int floor){
 	}
 }
 
-int get_order(elev_button_type_t button_type, int floor){
-	return order_matrix[button_type][floor];
+int get_order(elev_button_type_t button, int floor){
+	return order_matrix[button][floor];
 }
 
 void clear_order(int floor){
@@ -40,16 +39,6 @@ void clear_all(){
 			order_matrix[i][j] = 0;
 		}
 	}
-}
-
-void print_order_matrix(){
-	for (int i = 0; i < N_BUTTONS; i++){
-		for (int j = 0; j < N_FLOORS; j++){
-			printf("%d" , order_matrix[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
 }
 
 int orders_up(int recent_floor) {
@@ -68,4 +57,14 @@ int orders_down(int recent_floor) {
 		}
 	}
 	return 0;
+}
+
+void print_order_matrix(){
+	for (int i = 0; i < N_BUTTONS; i++){
+		for (int j = 0; j < N_FLOORS; j++){
+			printf("%d" , order_matrix[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
 }

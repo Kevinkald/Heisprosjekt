@@ -1,10 +1,24 @@
-#pragma once
+#ifndef __FSM_H__
+#define __FSM_H__
+
+/**
+  Handles the transitions between the states IDLE, UP and DOWN
+  by handling the order matrix.
+*/
+void elevator_controller(void);
+
 
 
 /**
-  Checks if the elevator buttons are pushed and updates the order matrix.
+  Checks the next state by checking if there are orders in same
+  direction above recent visited floor, if not it checks if there
+  are orders in same direction under the recent visited floor.
+  Handles if stop button is pushed and elevator is in non
+  defined floor.
+  @param recent_floor last floor visited.
+  @param direction, direction of the elevator -1 for down 1 for up. 
 */
-void check_buttons(void);
+void check_next_state(int recent_floor, int direction);
 
 
 
@@ -25,10 +39,9 @@ void check_stop_button(void);
 
 
 /**
-  Handles the transitions between the states IDLE, UP and DOWN
-  by handling the order matrix.
+  Checks if the elevator buttons are pushed and updates the order matrix.
 */
-void elevator_controller(void);
+void check_buttons(void);
 
 
 
@@ -36,3 +49,6 @@ void elevator_controller(void);
   Updates the floor indicator when a new floor is visited.
 */
 void update_floor_indicator(void);
+
+
+#endif // #ifndef __FSM_H___
