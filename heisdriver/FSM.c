@@ -21,7 +21,7 @@ int direction = 0;
 void elevator_controller(void){
 	int current_floor = elev_get_floor_sensor_signal();
 
-	if (current_floor!=-1) {
+	if (current_floor != -1) {
 		recent_floor = current_floor;
 	}
 
@@ -29,7 +29,20 @@ void elevator_controller(void){
 		case IDLE:
 				printf("Current state: < IDLE > \n");
 				elev_set_motor_direction(DIRN_STOP);
-				check_next_state(recent_floor, direction);
+
+				/*This if sentence handles if elevator gets an order
+				at the same floor as recent_floor.
+				*/
+				if ((get_order(BUTTON_CALL_UP, recent_floor) 
+					|| get_order(BUTTON_CALL_DOWN, recent_floor) 
+					|| get_order(BUTTON_COMMAND, recent_floor)) && current_floor != -1){
+					open_door();
+					clear_order(recent_floor);
+					break;
+				}
+				else {
+					check_next_state(recent_floor, direction);
+				}
 				break;
 
 		case UP:
@@ -38,7 +51,7 @@ void elevator_controller(void){
 				elev_set_motor_direction(DIRN_UP);
 				update_floor_indicator();
 
-				if(current_floor != -1) {
+				if (current_floor != -1) {
 					for (int i = recent_floor; i < N_FLOORS; i++) {
 						if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
@@ -82,16 +95,16 @@ in the same direction as the current direction of the elevator.
 Handles problem with undefined floor.
 */
 void check_next_state(int recent_floor, int direction) {
-	if(orders_up(recent_floor)
+	if (orders_up(recent_floor)
 		|| (direction == -1 && (get_order(BUTTON_CALL_UP, recent_floor)
 		|| get_order(BUTTON_CALL_DOWN, recent_floor)
-		|| (get_order(BUTTON_COMMAND, recent_floor))))){
+		|| get_order(BUTTON_COMMAND, recent_floor)))){
 		state = UP;
 	}
-	else if(orders_down(recent_floor)
+	else if (orders_down(recent_floor)
 		|| (direction && (get_order(BUTTON_CALL_UP, recent_floor)
 		|| get_order(BUTTON_CALL_DOWN, recent_floor)
-		|| (get_order(BUTTON_COMMAND, recent_floor))))){
+		|| get_order(BUTTON_COMMAND, recent_floor)))){
 		state = DOWN;
 	}
 }
@@ -101,7 +114,6 @@ void open_door(void) {
     elev_set_door_open_lamp(1);
     timer_delay_sec(3);
     elev_set_door_open_lamp(0);
-    printf("door open\n");
 }
 
 void check_stop_button(void) {
@@ -133,9 +145,9 @@ void check_buttons(void){
         	if (elev_get_button_signal(BUTTON_CALL_UP, i)){
             	set_order(BUTTON_CALL_UP, i);            
             }
-            elev_set_button_lamp(BUTTON_CALL_DOWN, i+1, get_order(BUTTON_CALL_DOWN, i+1));
-            if (elev_get_button_signal(BUTTON_CALL_DOWN, i+1)){
-            	set_order(BUTTON_CALL_DOWN, i+1);
+            elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, get_order(BUTTON_CALL_DOWN, i + 1));
+            if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
+            	set_order(BUTTON_CALL_DOWN, i + 1);
             }
 		}
         
