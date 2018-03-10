@@ -42,6 +42,7 @@ void elevator_controller(void){
 				}
 				else {
 					check_next_state(recent_floor, direction);
+					
 				}
 				break;
 
