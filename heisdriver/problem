@@ -1,0 +1,5 @@
+må splitte opp if setningene i FSM.c de er Eeeekstremt lange
+
+ //Hmmm, burde timeren ha tilgang til FSM, burde det ikke være omvendt?
+
+ //includes

@@ -14,14 +14,12 @@ int main() {
 
 	printf("started program");
 
-	while (1) {
-		
+	while (1) {	
         check_stop_button();
         elevator_controller();
         update_floor_indicator();
         check_buttons();
         print_order_matrix();
-      
     }
     return 0;
 }

@@ -1,8 +1,7 @@
 #include "timer.h"
-#include "FSM.h" //Hmmm, burde timeren ha tilgang til FSM, burde det ikke være omvendt?
+#include "FSM.h"
 
 void timer_delay_sec(int n_sec) {
-
 	clock_t before = clock();
 	int seconds = 0;
 
