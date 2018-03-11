@@ -144,20 +144,20 @@ void check_stop_button(void) {
 void check_buttons(void){
     for (int i = 0; i < N_FLOORS; i++){
         if (i < 3){ 
-        	elev_set_button_lamp(BUTTON_CALL_UP, i, get_order(BUTTON_CALL_UP, i));
         	if (elev_get_button_signal(BUTTON_CALL_UP, i)){
             	set_order(BUTTON_CALL_UP, i);            
             }
-            elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, get_order(BUTTON_CALL_DOWN, i + 1));
+            elev_set_button_lamp(BUTTON_CALL_UP, i, get_order(BUTTON_CALL_UP, i));
             if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
             	set_order(BUTTON_CALL_DOWN, i + 1);
             }
+            elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, get_order(BUTTON_CALL_DOWN, i + 1));
 		}
         
-        elev_set_button_lamp(BUTTON_COMMAND, i, get_order(BUTTON_COMMAND, i));
         if (elev_get_button_signal(BUTTON_COMMAND, i)){
             set_order(BUTTON_COMMAND, i);            
-        }	
+        }
+        elev_set_button_lamp(BUTTON_COMMAND, i, get_order(BUTTON_COMMAND, i));	
     }
 }
 
