@@ -36,13 +36,13 @@ void elevator_controller(void){
 				if ((get_order(BUTTON_CALL_UP, recent_floor) 
 					|| get_order(BUTTON_CALL_DOWN, recent_floor) 
 					|| get_order(BUTTON_COMMAND, recent_floor)) && current_floor != -1){
-					open_door();
-					clear_order(recent_floor);
-					break;
+						open_door();
+						clear_order(recent_floor);
+						break;
 				}
 				else {
 					check_next_state(recent_floor, direction);
-					
+
 				}
 				break;
 
@@ -57,6 +57,7 @@ void elevator_controller(void){
 						if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								clear_order(i);
+								check_buttons();
 								open_door();
 							}
 						}	
@@ -78,6 +79,7 @@ void elevator_controller(void){
 						if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
 								clear_order(i);
+								check_buttons();
 								open_door();
 							}
 						}	
