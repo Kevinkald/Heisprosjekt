@@ -48,11 +48,11 @@ void elevator_controller(void){
 
 		case UP:
 				printf("Current state: < UP > \n");
-				direction = DIRN_UP;
 				elev_set_motor_direction(DIRN_UP);
 				update_floor_indicator();
 
 				if (current_floor != -1) {
+					direction = DIRN_UP;
 					for (int i = recent_floor; i < N_FLOORS; i++) {
 						if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
@@ -70,11 +70,11 @@ void elevator_controller(void){
 
 		case DOWN:
 				printf("Current state: < DOWN > \n");
-				direction = DIRN_DOWN;
 				elev_set_motor_direction(DIRN_DOWN);
 				update_floor_indicator();
 
 				if (current_floor != -1) {
+					direction = DIRN_DOWN;
 					for (int i = recent_floor; i >= 0; i--) {
 						if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i)) {
 							if (elev_get_floor_sensor_signal() == i) {
