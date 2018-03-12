@@ -18,7 +18,7 @@ Main Success Scenario:
 3. The triggered command button illuminates.
 4. Elevator sets direction towards the triggered floor.
 5. Elevator moves towards the desired floor.
-6. Floor light changes when passing floor sensors.
+6. Floor light changes when passing floor sensor.
 7. Elevator stops when the desired floor sensor is activated.
 8. Order is cleared.
 9. Command button stops illuminating.

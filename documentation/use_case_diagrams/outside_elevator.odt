@@ -1,34 +1,36 @@
-Use case:
+User requests direction [up,down] outside elevator.
+
+Goal level: Sea Level
 
 Trigger:
-1. User pushes up/down button outside elevator:
+1. User pushes direction button.
 
 Preconditions:
 
-1. Elevator is in a defined state.
+1. Elevator is initialized.
 2. Emergency button is not activated.
 
 Main Success Scenario:
-1. User pushes/triggers up or down button.
-2. The direction button illuminates.
-3. Elevator sets direction towards the triggered buttons floor.
-4. Elevator stops when the triggered floor sensor is activated.
-5. The triggered direction button stops illuminating.
-6. Elevator opens door.
-7. Open-door diode illuminates.
-8. User goes inside.
-9. Elevator closes doors after 3 seconds.
-10. Open-door button stops illuminating.
+1. User pushes up or down button.
+2. The order is added to the order list.
+3. The pushed direction button illuminates.
+4. Elevator sets direction towards the triggered buttons floor.
+5. Floor light changes when passing floor sensors.
+6. Elevator stops when the triggered floor sensor is activated.
+7. The triggered direction button stops illuminating.
+8. Elevator opens door.
+9. Open-door diode illuminates.
+10. User goes inside.
+11. Elevator closes doors after 3 seconds.
+12. Open-door button stops illuminating.
 
 
 Extensions:
 
-2a: Elevator is busy
-	1. Elevator finishes current task, can pick up the user if in the same direction.
-	2. Elevator drives to the triggered floor.
+4a: Elevator is busy
+	1. Elevator picks up user if in the same direction as previosly.
+	2. Waits for other requests to finish.
 
-3a: Elevator goes past the triggered floor if down button is pushed and elevator is on 	its way up from earlier trigger.
-	1. Stops when it matches the same direction as desired by user
-
-3b: Elevator goes past the triggered floor if up button is pushed and elevator is on its way down from earlier trigger.
-	1. Stops when it matches the same direction as desired by user
+5a: Elevator goes past the triggered floor if the elevators current direction does not match
+the requested direction.
+	1. Stops when it matches the same direction as desired by user.
