@@ -10,10 +10,9 @@ typedef enum tag_elev_direction {
     IDLE = -1,
     DOWN = 0,    
     UP = 1
-    STOP = 2;
 } elevator_state;
 
-//Initializing variables	
+//Initializing variables
 elevator_state state = IDLE;
 int recent_floor;
 int direction = 0;
@@ -45,11 +44,6 @@ void elevator_controller(void){
 					check_next_state(recent_floor, direction);
 
 				}
-				break;
-		case STOP:
-
-
-
 				break;
 
 		case UP:
