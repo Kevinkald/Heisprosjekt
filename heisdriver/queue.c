@@ -23,14 +23,15 @@ void set_order(elev_button_type_t button, int floor){
 	}
 }
 
-int get_order(elev_button_type_t button, int floor){
-	return order_matrix[button][floor];
-}
 
 void clear_order(int floor){
 	order_matrix[0][floor] = 0;
 	order_matrix[1][floor] = 0;
 	order_matrix[2][floor] = 0;
+}
+
+int get_order(elev_button_type_t button, int floor){
+	return order_matrix[button][floor];
 }
 
 void clear_all(){
