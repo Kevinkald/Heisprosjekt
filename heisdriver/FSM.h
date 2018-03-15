@@ -1,6 +1,9 @@
 #ifndef __FSM_H__
 #define __FSM_H__
 
+
+#include "elev.h"
+
 /**
   Handles the transitions between the states IDLE, UP and DOWN
   by handling the order matrix.
@@ -41,7 +44,7 @@ void check_stop_button(void);
 /**
   Checks if the elevator buttons are pushed and updates the order matrix.
 */
-void check_buttons(void);
+void check_buttons();
 
 
 
