@@ -122,6 +122,7 @@ void open_door(void) {
 
 void check_stop_button(void) {
     int stopped = 0;
+    int current_floor = elev_get_floor_sensor_signal();
 
     while (elev_get_stop_signal()){
         elev_set_motor_direction(DIRN_STOP);
@@ -131,13 +132,14 @@ void check_stop_button(void) {
         stopped = 1;
     
 
-	    if ((elev_get_floor_sensor_signal() != -1) && (stopped)){
+	    if ((current_floor != -1) && (stopped)){
 	    	
 	    	open_door();
 	    	state = IDLE;
 	    }
 
 	}
+
     if (stopped){
     	state = IDLE;
    	}
@@ -216,8 +218,8 @@ void check_stop_button(void) {
         	elev_set_button_lamp(BUTTON_COMMAND, i, get_order(BUTTON_COMMAND, i));
         }	
     }
-}
-*/
+}*/
+
 void check_buttons(void){
     for (int i = 0; i < N_FLOORS; i++){
         if (i < 3){ 
