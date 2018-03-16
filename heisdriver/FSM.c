@@ -209,4 +209,3 @@ void update_floor_indicator(void) {
 		elev_set_floor_indicator(current_floor);
 	}
 }
- 
