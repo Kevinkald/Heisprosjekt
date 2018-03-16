@@ -20,7 +20,7 @@ int direction = 0;
 //Finite-state-machine
 void elevator_controller(void){
 	int current_floor = elev_get_floor_sensor_signal();
-
+	
 	if (current_floor != -1) {
 		recent_floor = current_floor;
 	}
@@ -29,7 +29,7 @@ void elevator_controller(void){
 		case IDLE:
 				printf("Current state: < IDLE > \n");
 				elev_set_motor_direction(DIRN_STOP);
-
+				
 				/*This if sentence handles if elevator gets an order
 				at the same floor as recent_floor.
 				*/
@@ -38,6 +38,7 @@ void elevator_controller(void){
 					|| get_order(BUTTON_COMMAND, recent_floor)) && current_floor != -1){
 						open_door();
 						clear_order(recent_floor);
+									
 						break;
 				}
 				else {
@@ -54,15 +55,22 @@ void elevator_controller(void){
 				if (current_floor != -1) {
 					direction = DIRN_UP;
 					for (int i = recent_floor; i < N_FLOORS; i++) {
-						if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
+						if (elev_get_floor_sensor_signal() == i) {
+							if (get_order(BUTTON_CALL_UP, i) || get_order(BUTTON_COMMAND, i)) {
 								clear_order(i);
-								check_buttons();
 								open_door();
+								
 							}
-						}	
+							else if (!orders_up(recent_floor)) {
+								clear_order(i);
+								open_door();
+								state = IDLE;
+								break;
+							}	
+						} 
 					}
-					if (!orders_up(recent_floor)) {
+					
+					if (!orders_up(recent_floor)){
 						state = IDLE;
 					}
 				}
@@ -76,16 +84,23 @@ void elevator_controller(void){
 				if (current_floor != -1) {
 					direction = DIRN_DOWN;
 					for (int i = recent_floor; i >= 0; i--) {
-						if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i)) {
-							if (elev_get_floor_sensor_signal() == i) {
+						if (elev_get_floor_sensor_signal() == i) {
+							if (get_order(BUTTON_CALL_DOWN, i) || get_order(BUTTON_COMMAND, i)) {
 								clear_order(i);
-								check_buttons();
 								open_door();
 							}
-						}	
+
+							else if (!orders_down(recent_floor)){
+								clear_order(i);
+								open_door();
+								state = IDLE;
+								break;
+							}
+						}
 					}
-					if (!orders_down(recent_floor)) {
-							state = IDLE;
+					
+					if (!orders_down(recent_floor)){
+						state = IDLE;
 					}
 				}
 				break;		
@@ -121,43 +136,70 @@ void open_door(void) {
 
 void check_stop_button(void) {
     int stopped = 0;
-
+    
     while (elev_get_stop_signal()){
         elev_set_motor_direction(DIRN_STOP);
         elev_set_stop_lamp(1);
-        clear_all();	
-        check_buttons();
+        clear_all();
+        check_buttons();	
         stopped = 1;
-    }
+        state = IDLE;
+    	
+		if ((elev_get_floor_sensor_signal() != -1) && (stopped)){
+		   	open_door();
+		   	
+		}
 
-    if ((elev_get_floor_sensor_signal() != -1) && (stopped)) {
-    	open_door();
-    	state = IDLE;
-    }
-    else if (stopped) {
-    	state = IDLE;
-   	}
-
-    elev_set_stop_lamp(0);
+	}
+	
+	elev_set_stop_lamp(0);
+ 
 }
 
+
 void check_buttons(void){
+    int current_floor = elev_get_floor_sensor_signal();
+    
     for (int i = 0; i < N_FLOORS; i++){
         if (i < 3){ 
-        	if (elev_get_button_signal(BUTTON_CALL_UP, i)){
-            	set_order(BUTTON_CALL_UP, i);            
+        	
+        	if (elev_get_button_signal(BUTTON_CALL_UP, i) && !(elev_get_stop_signal()) ){
+            	set_order(BUTTON_CALL_UP, i);
+
+            	if (!(current_floor == i)){
+            		elev_set_button_lamp(BUTTON_CALL_UP, i, 1); 
+            	}
             }
-            elev_set_button_lamp(BUTTON_CALL_UP, i, get_order(BUTTON_CALL_UP, i));
-            if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1)){
+
+            if (!(get_order(BUTTON_CALL_UP, i)) || elev_get_stop_signal()){
+            	elev_set_button_lamp(BUTTON_CALL_UP, i, 0);
+            }
+                        
+
+            if (elev_get_button_signal(BUTTON_CALL_DOWN, i + 1) && !(elev_get_stop_signal()) ){
             	set_order(BUTTON_CALL_DOWN, i + 1);
+	            
+	            if (!(current_floor == (i + 1))){
+	            	elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, 1); 
+	            }
+           }
+           
+            if (!(get_order(BUTTON_CALL_DOWN, i + 1)) || elev_get_stop_signal()){
+            	elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, 0);
             }
-            elev_set_button_lamp(BUTTON_CALL_DOWN, i + 1, get_order(BUTTON_CALL_DOWN, i + 1));
 		}
         
-        if (elev_get_button_signal(BUTTON_COMMAND, i)){
+        if (elev_get_button_signal(BUTTON_COMMAND, i) && !(elev_get_stop_signal()) ){
             set_order(BUTTON_COMMAND, i);            
+	        
+	        if (!(current_floor == i)){
+	            elev_set_button_lamp(BUTTON_COMMAND, i, 1); 
+	        }
         }
-        elev_set_button_lamp(BUTTON_COMMAND, i, get_order(BUTTON_COMMAND, i));	
+            
+        if (!(get_order(BUTTON_COMMAND, i)) || elev_get_stop_signal()){
+            elev_set_button_lamp(BUTTON_COMMAND, i, 0);
+        }
     }
 }
 
