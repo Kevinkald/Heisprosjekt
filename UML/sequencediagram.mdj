@@ -32432,11 +32432,11 @@
 											"containerExtending": false,
 											"left": 141.07177734375,
 											"top": 493,
-											"width": 179.50244140625,
+											"width": 96.392578125,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "current_floor==requested_floor",
+											"text": "current_floor==0",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -32599,11 +32599,11 @@
 											"containerExtending": false,
 											"left": 149.07177734375,
 											"top": 1037,
-											"width": 179.50244140625,
+											"width": 96.392578125,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "current_floor==requested_floor",
+											"text": "current_floor==2",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -33329,7 +33329,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFiNdheyIdfzAs="
 							},
-							"name": "current_floor==requested_floor",
+							"name": "current_floor==0",
 							"visibility": "public",
 							"isReentrant": true,
 							"interactionOperator": "opt",
@@ -33352,7 +33352,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFiNdheyIdfzAs="
 							},
-							"name": "current_floor==requested_floor",
+							"name": "current_floor==2",
 							"visibility": "public",
 							"isReentrant": true,
 							"interactionOperator": "opt",
