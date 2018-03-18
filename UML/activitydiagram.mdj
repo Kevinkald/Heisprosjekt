@@ -38,7 +38,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFiHszkTfUG7h8="
 					},
-					"name": "ActivityDiagram1",
+					"name": " ",
 					"visible": true,
 					"defaultDiagram": false,
 					"ownedViews": [
@@ -5270,11 +5270,11 @@
 									"containerExtending": false,
 									"left": 130.72998046875,
 									"top": 29,
-									"width": 98.525390625,
+									"width": 4.61181640625,
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "ActivityDiagram1",
+									"text": " ",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
