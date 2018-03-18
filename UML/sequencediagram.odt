@@ -1,0 +1,23 @@
+Sequence main case:
+
+1. Elevator empty with open doors at 2. floor.
+2. After 3 sec the door closes.
+3. User pushes button UP at 1. floor.
+4. FSM checks if a button has been pushed.
+5. FSM orders the queue module to add the new order to the order matrix.
+6. FSM checks which new state to go to.
+7. Since floor requested is beneath current floor the state is set to DOWN.
+8. Elevator starts moving down.
+9. A loop checks if the current floor matches 1.floor, if so the order is cleared.
+10. Door opens and starts the 3 sec timer.
+11. After 3 sec the door closes.
+
+12. User push the 3.floor command button.
+13. FSM checks if a button has been pushed.
+14. FSM orders the queue module to add the new order to the order matrix.
+15. FSM checks which new state to go to.
+16. Since floor requested is above current floor the state is set to UP.
+17. Elevator starts moving UP.
+18. A loop checks if the current floor matches 3.floor, if so the order is cleared.
+19. Door opens and starts the 3 sec timer.
+20. After 3 sec the door closes.
