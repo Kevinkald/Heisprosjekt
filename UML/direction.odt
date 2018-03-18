@@ -1,35 +1,36 @@
-User wants to go to a floor
+User requests direction [up,down] outside elevator.
 
-Goal Level: Sea Level
+Goal level: Sea Level
 
 Trigger:
-1. User pushes a command button [1,4]:
+1. User pushes direction button.
 
 Preconditions:
 
-1. User is inside elevator.
-2. Elevator is initialized.
-3. Emergency button is not activated.
+1. Elevator is initialized.
+2. Emergency button is not activated.
 
 Main Success Scenario:
+1. User pushes up or down button.
+2. The order is added to the order list.
+3. The pushed direction button illuminates.
+4. Elevator sets direction towards the triggered buttons floor.
+5. Floor light changes when passing floor sensors.
+6. Elevator stops when the triggered floor sensor is activated.
+7. The triggered direction button stops illuminating.
+8. Elevator opens door.
+9. Open-door diode illuminates.
+10. User goes inside.
+11. Elevator closes doors after 3 seconds.
+12. Open-door button stops illuminating.
 
-1. User triggers command button [1,4] to select which floor to go to.
-2. The desired order is added to the order list.
-3. The triggered command button illuminates.
-4. Elevator sets direction towards the triggered floor.
-5. Elevator moves towards the desired floor.
-6. Floor light changes when passing floor sensors.
-7. Elevator stops when the desired floor sensor is activated.
-8. Order is cleared.
-9. Command button stops illuminating.
-10. Elevator opens door for 3 seconds.
-11. User exits the elevator.
-12. Elevator closes door.
 
 Extensions:
-1a: User pushed several buttons by an accident
-	1. Stops at nearest floor in the direction the elevator is set at, then next and fourth until all floors have been visited.
 
-4a: In case of queue
-	1. Elevator continues in the set direction as previously. Direction is changed when all floors have been visited down/up a direction.
-	2. Elevator stops at floors wanting to go the same direction.
+4a: Elevator is busy
+	1. Elevator picks up user if in the same direction as previosly.
+	2. Waits for other requests to finish.
+
+5a: Elevator goes past the triggered floor if the elevators current direction does not match
+the requested direction.
+	1. Stops when it matches the same direction as desired by user.
